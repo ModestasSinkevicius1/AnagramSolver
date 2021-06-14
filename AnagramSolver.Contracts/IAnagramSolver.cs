@@ -8,5 +8,6 @@ namespace AnagramSolver.Contracts
 {
     interface IAnagramSolver
     {
+        
     }
 }
