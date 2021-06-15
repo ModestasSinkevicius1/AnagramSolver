@@ -30,6 +30,7 @@ namespace AnagramSolver.BusinessLogic
                         
                         string[] word = Regex.Split(line, @" +");
                         
+                        //Only for debug
                         Console.WriteLine(word[0]);
                         
                         //la.Add(new Anagram(word[0], word[1], word[2], Convert.ToInt32(word[3])));
