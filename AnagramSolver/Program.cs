@@ -1,13 +1,26 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using AnagramSolver.BusinessLogic;
+using AnagramSolver.Contracts;
 
 namespace AnagramSolver.Cli
 {
     class Program
     {
         static void Main(string[] args)
-        {         
-            Regex filterWord = new Regex(@"[balas]{4}");
+        {S
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            AnagramSolverWordRepository aswr = new AnagramSolverWordRepository();
+
+            foreach(Anagram ana in aswr.GetWords())
+            {
+                Console.WriteLine(ana.word);
+            }
+
+            /*Regex filterWord = new Regex(@"[balas]{4}");
 
             //string keyWord = Console.ReadLine();
 
@@ -18,6 +31,7 @@ namespace AnagramSolver.Cli
                 Console.WriteLine("true");
             else
                 Console.WriteLine("false");
+            */
             
         }
     }
