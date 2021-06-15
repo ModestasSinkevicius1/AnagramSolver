@@ -9,7 +9,7 @@ namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverWordRepository : IWordRepository
     {
-        private List<Anagram> la = new List<Anagram>();
+        private IList<Anagram> la = new List<Anagram>();
 
         public IList<Anagram> GetWords()
         {
@@ -28,12 +28,12 @@ namespace AnagramSolver.BusinessLogic
                     while((line = sr.ReadLine()) != null)
                     {
                         
-                        string[] word = Regex.Split(line, @" +");
+                        string[] word = line.Split("\t");
                         
                         //Only for debug
-                        Console.WriteLine(word[0]);
+                        //Console.WriteLine(word[0]);
                         
-                        //la.Add(new Anagram(word[0], word[1], word[2], Convert.ToInt32(word[3])));
+                        la.Add(new Anagram(word[0], word[1], word[2], Convert.ToInt32(word[3])));
                     }                   
                 }
                 return la;

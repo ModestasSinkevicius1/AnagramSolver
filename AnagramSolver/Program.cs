@@ -10,15 +10,15 @@ namespace AnagramSolver.Cli
     class Program
     {
         static void Main(string[] args)
-        {S
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        {
+            using IHost host = CreateHostBuilder(args).Build();
 
-            AnagramSolverWordRepository aswr = new AnagramSolverWordRepository();
-
-            foreach(Anagram ana in aswr.GetWords())
+            Console.OutputEncoding = System.Text.Encoding.UTF8;           
+            
+            /*foreach(Anagram ana in GetWords())
             {
                 Console.WriteLine(ana.word);
-            }
+            }*/
 
             /*Regex filterWord = new Regex(@"[balas]{4}");
 
@@ -32,7 +32,23 @@ namespace AnagramSolver.Cli
             else
                 Console.WriteLine("false");
             */
+
+            using IServiceScope serviceScope = host.Services.CreateScope();
+            IServiceProvider provider = serviceScope.ServiceProvider;
+
+            ConsoleInterface ci = provider.GetRequiredService<ConsoleInterface>();
+
+            ci.OutputResult();
             
+            host.Run();
         }
+        static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((_, services) =>
+                    services.
+                        AddSingleton<IWordRepository, AnagramSolverWordRepository>().
+                        AddSingleton<IAnagramSolver, AnagramSolverLogic>().
+                        AddSingleton<ConsoleInterface>());
+                            
     }
 }
