@@ -10,29 +10,28 @@ namespace AnagramSolver.Cli
     class Program
     {
         static void Main(string[] args)
-        {S
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        {
+            using IHost host = CreateHostBuilder(args).Build();
 
-            AnagramSolverWordRepository aswr = new AnagramSolverWordRepository();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;                       
 
-            foreach(Anagram ana in aswr.GetWords())
-            {
-                Console.WriteLine(ana.word);
-            }
+            using IServiceScope serviceScope = host.Services.CreateScope();
+            IServiceProvider provider = serviceScope.ServiceProvider;
 
-            /*Regex filterWord = new Regex(@"[balas]{4}");
+            ConsoleInterface ci = provider.GetRequiredService<ConsoleInterface>();
 
-            //string keyWord = Console.ReadLine();
-
-            string keyWord = "labas";
-
-            //Checking if given word matches set of characters
-            if (filterWord.IsMatch(keyWord))
-                Console.WriteLine("true");
-            else
-                Console.WriteLine("false");
-            */
+            ci.OutputResult();
             
+            host.Run();
         }
+        static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((context, services) =>
+                    services.
+                        AddSingleton<IWordRepository, AnagramSolverWordRepository>().
+                        AddSingleton<IAnagramSolver, AnagramSolverLogic>().
+                        AddSingleton<ConsoleInterface>().
+                        Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram)));
+                            
     }
 }
