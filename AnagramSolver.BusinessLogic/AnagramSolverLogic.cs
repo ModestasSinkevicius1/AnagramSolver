@@ -7,41 +7,46 @@ namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverLogic : IAnagramSolver
     {
-        private IWordRepository iwr;
+        private IWordRepository _wordRepository;
               
-        public AnagramSolverLogic(IWordRepository iwr)
+        public AnagramSolverLogic(IWordRepository wordRepository)
         {
-            this.iwr = iwr;
+            _wordRepository = wordRepository;
         }
 
         public IList<string> GetAnagrams(string myWords)
         {
-            IList<string> aList = new List<string>();
+            IList<string> anagramWordList = new List<string>();
 
-            iwr.GetWords();
+            _wordRepository.GetWords();
            
             string wordPattern = "^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";
 
             Regex filterWord = new Regex(wordPattern);           
 
             //Checking if given word matches set of characters                       
-            foreach (Anagram ana in iwr.GetWords())
+            foreach (Anagram ana in _wordRepository.GetWords())
             {
                 if (filterWord.IsMatch(ana.Word))
                 {
-                    if(!aList.Contains(ana.Word) && ana.Word != myWords)
+                    if(!anagramWordList.Contains(ana.Word) && ana.Word != myWords)
                         if(IsLetterNotMoreThanGiven(myWords, ana.Word))
-                            aList.Add(ana.Word);
+                            anagramWordList.Add(ana.Word);
                 }
             }           
 
-            return aList;
+            return anagramWordList;
         }
 
+        /*checking if anagram has exact letters as given word input.
+
+            "refWord" is our given input.
+            "checkWord" is anagram. 
+        */
         public bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
-            int countR = 0;
-            int countC = 0;
+            int countRefLetter = 0;
+            int countCheckLetter = 0;
 
             List<char> blacklistChar = new List<char>();            
 
@@ -49,23 +54,23 @@ namespace AnagramSolver.BusinessLogic
             {                
                 if (!blacklistChar.Contains(targetLetter))
                 {                    
-                    foreach (char countRefLetter in refWord)
+                    foreach (char refLetter in refWord)
                     {
-                        if (targetLetter == countRefLetter)
-                            countR++;
+                        if (targetLetter == refLetter)
+                            countRefLetter++;
                     }
 
-                    foreach (char countCheckLetter in checkWord)
+                    foreach (char checkLetter in checkWord)
                     {
-                        if (targetLetter == countCheckLetter)
-                            countC++;
+                        if (targetLetter == checkLetter)
+                            countCheckLetter++;
                     }
 
-                    if (countR != countC)
+                    if (countRefLetter != countCheckLetter)
                         return false;
 
-                    countR = 0;
-                    countC = 0;
+                    countRefLetter = 0;
+                    countCheckLetter = 0;
 
                     blacklistChar.Add(targetLetter);                
                 }                

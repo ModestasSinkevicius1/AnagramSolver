@@ -9,11 +9,11 @@ namespace AnagramSolver.Cli
 {
     public class ConsoleInterface
     {
-        private IAnagramSolver anagramSolver;
+        private IAnagramSolver _anagramSolver;
         
-        public ConsoleInterface(IAnagramSolver _as)
+        public ConsoleInterface(IAnagramSolver anagramSolver)
         {
-            anagramSolver = _as;
+            _anagramSolver = anagramSolver;
         }
 
         public void OutputResult()
@@ -30,7 +30,7 @@ namespace AnagramSolver.Cli
 
                     if (commandWord != "exit")
                     {
-                        foreach (string ana in anagramSolver.GetAnagrams(commandWord))
+                        foreach (string ana in _anagramSolver.GetAnagrams(commandWord))
                         {
                             Console.WriteLine(ana);
                         }
