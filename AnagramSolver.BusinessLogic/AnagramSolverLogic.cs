@@ -1,5 +1,4 @@
-﻿using System;
-using AnagramSolver.Contracts;
+﻿using AnagramSolver.Contracts;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using AnagramSolver.BusinessLogic;

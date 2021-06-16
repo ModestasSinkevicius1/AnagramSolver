@@ -2,8 +2,6 @@
 using AnagramSolver.Contracts;
 using System.IO;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Text;
 
 namespace AnagramSolver.BusinessLogic
 {
