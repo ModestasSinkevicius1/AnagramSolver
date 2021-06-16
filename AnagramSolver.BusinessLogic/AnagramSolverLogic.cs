@@ -34,7 +34,7 @@ namespace AnagramSolver.BusinessLogic
                 if (filterWord.IsMatch(ana.Word))
                 {
                     if(!anagramWords.Contains(ana.Word) && ana.Word != myWords)
-                        if(IIsLetterNotMoreThanGiven(myWords, ana.Word))
+                        if(IsLetterNotMoreThanGiven(myWords, ana.Word))
                             anagramWords.Add(ana.Word);
                 }
             }           
@@ -47,7 +47,7 @@ namespace AnagramSolver.BusinessLogic
             "refWord" is our given input.
             "checkWord" is anagram. 
         */
-        public bool IIsLetterNotMoreThanGiven(string refWord, string checkWord)
+        public bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
             int countRefLetter = 0;
             int countCheckLetter = 0;

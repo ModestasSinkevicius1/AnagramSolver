@@ -19,7 +19,7 @@ namespace AnagramSolver.Tests
 
             bool expected = true;
 
-            bool actual = anagramSolverLogic.IIsLetterNotMoreThanGiven("labas", "balas");
+            bool actual = anagramSolverLogic.IsLetterNotMoreThanGiven("labas", "balas");
 
             Assert.AreEqual(expected, actual);           
         }

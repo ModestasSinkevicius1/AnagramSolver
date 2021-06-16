@@ -6,6 +6,5 @@ namespace AnagramSolver.Contracts
     {
         IList<string> GetAnagrams(string myWords);
 
-        bool IIsLetterNotMoreThanGiven(string refWord, string checkWord);
     }
 }
