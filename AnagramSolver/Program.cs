@@ -26,11 +26,12 @@ namespace AnagramSolver.Cli
         }
         static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((_, services) =>
+                .ConfigureServices((context, services) =>
                     services.
                         AddSingleton<IWordRepository, AnagramSolverWordRepository>().
                         AddSingleton<IAnagramSolver, AnagramSolverLogic>().
-                        AddSingleton<ConsoleInterface>());
+                        AddSingleton<ConsoleInterface>().
+                        Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram)));
                             
     }
 }

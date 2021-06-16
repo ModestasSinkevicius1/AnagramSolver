@@ -11,7 +11,7 @@ namespace AnagramSolver.BusinessLogic
     {       
         public IList<Anagram> GetWords()
         {           
-            IList<Anagram> anagramList = new List<Anagram>();
+            IList<Anagram> anagrams = new List<Anagram>();
 
             using (StreamReader sr = File.OpenText("zodynas.txt"))
             {
@@ -21,11 +21,11 @@ namespace AnagramSolver.BusinessLogic
                 {                      
                     string[] wordPart = line.Split("\t");
                         
-                    anagramList.Add(new Anagram(wordPart[0], wordPart[1], wordPart[2], Convert.ToInt32(wordPart[3])));
+                    anagrams.Add(new Anagram(wordPart[0], wordPart[1], wordPart[2], Convert.ToInt32(wordPart[3])));
                 }                   
             }
 
-            return anagramList;                        
+            return anagrams;                        
         }
     }
 }

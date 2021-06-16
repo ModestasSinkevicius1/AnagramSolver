@@ -2,25 +2,30 @@
 using AnagramSolver.Contracts;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Options;
 
 namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverLogic : IAnagramSolver
     {
         private IWordRepository _wordRepository;
-              
-        public AnagramSolverLogic(IWordRepository wordRepository)
+
+        private readonly AnagramConfig _anagramConfig;    
+
+        public AnagramSolverLogic(IWordRepository wordRepository, IOptions<AnagramConfig> anagramConfig)
         {
             _wordRepository = wordRepository;
+
+            _anagramConfig = anagramConfig.Value;
         }
 
         public IList<string> GetAnagrams(string myWords)
         {
-            IList<string> anagramWordList = new List<string>();
+            IList<string> anagramWords = new List<string>();
 
             _wordRepository.GetWords();
            
-            string wordPattern = "^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";
+            string wordPattern = "^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";            
 
             Regex filterWord = new Regex(wordPattern);           
 
@@ -29,13 +34,13 @@ namespace AnagramSolver.BusinessLogic
             {
                 if (filterWord.IsMatch(ana.Word))
                 {
-                    if(!anagramWordList.Contains(ana.Word) && ana.Word != myWords)
+                    if(!anagramWords.Contains(ana.Word) && ana.Word != myWords)
                         if(IsLetterNotMoreThanGiven(myWords, ana.Word))
-                            anagramWordList.Add(ana.Word);
+                            anagramWords.Add(ana.Word);
                 }
             }           
 
-            return anagramWordList;
+            return anagramWords;
         }
 
         /*checking if anagram has exact letters as given word input.
