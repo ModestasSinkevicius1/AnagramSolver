@@ -28,15 +28,18 @@ namespace AnagramSolver.Cli
 
                     commandWord = GetMyInput();
 
-                    foreach (string ana in anagramSolver.GetAnagrams(commandWord))
+                    if (commandWord != "exit")
                     {
-                        Console.WriteLine(ana);
-                    }                  
+                        foreach (string ana in anagramSolver.GetAnagrams(commandWord))
+                        {
+                            Console.WriteLine(ana);
+                        }
 
-                    Console.WriteLine("Press enter to continue");
-                    Console.ReadLine();
+                        Console.WriteLine("Press enter to continue");
+                        Console.ReadLine();
 
-                    Console.Clear();                 
+                        Console.Clear();
+                    }
                 }
             }
             catch(Exception exc)
