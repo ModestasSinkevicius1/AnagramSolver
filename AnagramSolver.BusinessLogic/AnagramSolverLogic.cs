@@ -8,8 +8,7 @@ namespace AnagramSolver.BusinessLogic
     public class AnagramSolverLogic : IAnagramSolver
     {
         private IWordRepository iwr;
-        private IList<string> aList = new List<string>();
-        
+              
         public AnagramSolverLogic(IWordRepository iwr)
         {
             this.iwr = iwr;
@@ -17,14 +16,13 @@ namespace AnagramSolver.BusinessLogic
 
         public IList<string> GetAnagrams(string myWords)
         {
+            IList<string> aList = new List<string>();
+
             iwr.GetWords();
+           
+            string wordPattern = "^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";
 
-            string wordPattern = @"^[labas]{5}$";
-                //"^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";
-
-            Regex filterWord = new Regex(wordPattern);
-
-            if (isLetterNotMoreThanGiven("labas", "balas"));
+            Regex filterWord = new Regex(wordPattern);           
 
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in iwr.GetWords())
@@ -32,7 +30,7 @@ namespace AnagramSolver.BusinessLogic
                 if (filterWord.IsMatch(ana.Word))
                 {
                     if(!aList.Contains(ana.Word) && ana.Word != myWords)
-                        //if(isLetterNotMoreThanGiven(myWords, ana.Word))
+                        if(IsLetterNotMoreThanGiven(myWords, ana.Word))
                             aList.Add(ana.Word);
                 }
             }           
@@ -40,47 +38,38 @@ namespace AnagramSolver.BusinessLogic
             return aList;
         }
 
-        public bool isLetterNotMoreThanGiven(string refWord, string checkWord)
+        public bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
-            int countRefLetter = 0;
-            int countCheckLetter = 0;
+            int countR = 0;
+            int countC = 0;
 
-            List<char> blacklistChar = new List<char>();
-
-            List<char> blacklistCharCheck = new List<char>();
+            List<char> blacklistChar = new List<char>();            
 
             foreach(char targetLetter in refWord)
             {                
                 if (!blacklistChar.Contains(targetLetter))
-                {                   
-                    foreach (char countLetter in refWord)
+                {                    
+                    foreach (char countRefLetter in refWord)
                     {
-                        if (targetLetter == countLetter)
-                            countRefLetter++;
+                        if (targetLetter == countRefLetter)
+                            countR++;
                     }
-                    foreach (char targetCheckLetter in checkWord)
+
+                    foreach (char countCheckLetter in checkWord)
                     {
-                        if (!blacklistCharCheck.Contains(targetLetter))
-                        {
-                            foreach (char _countCheckLetter in checkWord)
-                            {
-                                if (targetCheckLetter == _countCheckLetter)
-                                    countCheckLetter++;
-                            }                                                        
-
-                            countCheckLetter = 0;
-
-                            blacklistCharCheck.Add(targetCheckLetter);
-                        }
+                        if (targetLetter == countCheckLetter)
+                            countC++;
                     }
-                    Console.WriteLine($"{countRefLetter}");
-                    countRefLetter = 0;
 
-                    blacklistChar.Add(targetLetter);                    
+                    if (countR != countC)
+                        return false;
+
+                    countR = 0;
+                    countC = 0;
+
+                    blacklistChar.Add(targetLetter);                
                 }                
-            }
-            blacklistChar.Clear();
-            blacklistCharCheck.Clear();
+            }            
 
             return true;
         }

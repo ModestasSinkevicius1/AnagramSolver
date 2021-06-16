@@ -8,42 +8,23 @@ using System.Text;
 namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverWordRepository : IWordRepository
-    {
-        private IList<Anagram> la = new List<Anagram>();
-
+    {       
         public IList<Anagram> GetWords()
-        {
-            try
+        {           
+            IList<Anagram> la = new List<Anagram>();
+
+            using (StreamReader sr = File.OpenText("zodynas.txt"))
             {
-                using (StreamReader sr = File.OpenText("zodynas.txt"))
-                {
-                    string line;
+                string line;                    
 
-                    //int row = 0;
-
-                    //string[] word = new string[4];
-
-                    //string fullWord = "";
-
-                    while((line = sr.ReadLine()) != null)
-                    {
+                while((line = sr.ReadLine()) != null)
+                {                      
+                    string[] word = line.Split("\t");
                         
-                        string[] word = line.Split("\t");
-                        
-                        //Only for debug
-                        //Console.WriteLine(word[0]);
-                        
-                        la.Add(new Anagram(word[0], word[1], word[2], Convert.ToInt32(word[3])));
-                    }                   
-                }
-                return la;
+                    la.Add(new Anagram(word[0], word[1], word[2], Convert.ToInt32(word[3])));
+                }                   
             }
-            catch(Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                Console.ReadLine();
-                return null;
-            }
+            return la;                        
         }
     }
 }

@@ -13,25 +13,7 @@ namespace AnagramSolver.Cli
         {
             using IHost host = CreateHostBuilder(args).Build();
 
-            Console.OutputEncoding = System.Text.Encoding.UTF8;           
-            
-            /*foreach(Anagram ana in GetWords())
-            {
-                Console.WriteLine(ana.word);
-            }*/
-
-            /*Regex filterWord = new Regex(@"[balas]{4}");
-
-            //string keyWord = Console.ReadLine();
-
-            string keyWord = "labas";
-
-            //Checking if given word matches set of characters
-            if (filterWord.IsMatch(keyWord))
-                Console.WriteLine("true");
-            else
-                Console.WriteLine("false");
-            */
+            Console.OutputEncoding = System.Text.Encoding.UTF8;                       
 
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
