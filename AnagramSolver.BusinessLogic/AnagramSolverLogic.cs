@@ -19,11 +19,9 @@ namespace AnagramSolver.BusinessLogic
         }
 
         public IList<string> GetAnagrams(string myWords)
-        {       
-            _wordRepository.GetWords();
-
+        {           
             if (myWords == "")
-                myWords = " ";
+                return new List<string>();
 
             string wordPattern = $"^[{myWords}]{{{myWords.Length}}}$";
 
