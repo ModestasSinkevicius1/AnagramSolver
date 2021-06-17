@@ -19,22 +19,25 @@ namespace AnagramSolver.BusinessLogic
         }
 
         public IList<string> GetAnagrams(string myWords)
-        {
-            IList<string> anagramWords = new List<string>();
-
+        {       
             _wordRepository.GetWords();
-           
-            string wordPattern = $"^[{myWords }]{{{myWords.Length}}}$";
+
+            if (myWords == "")
+                myWords = " ";
+
+            string wordPattern = $"^[{myWords}]{{{myWords.Length}}}$";
 
             Regex filterWord = new Regex(wordPattern);
 
-            anagramWords = GetAnagramWords(filterWord, anagramWords, myWords);
+            List<string> anagramWords = GetAnagramWords(filterWord, myWords);
 
             return anagramWords;
         }
 
-        private List<string> GetAnagramWords(Regex filterWord, IList<string> anagramWords, string myWords)
+        private List<string> GetAnagramWords(Regex filterWord, string myWords)
         {
+            List<string> anagramWords = new List<string>();
+            
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
             {
@@ -56,7 +59,7 @@ namespace AnagramSolver.BusinessLogic
                 }
             }          
 
-            return anagramWords as List<string>;
+            return anagramWords;
         }
 
         /*checking if anagram has exact letters as given word input.

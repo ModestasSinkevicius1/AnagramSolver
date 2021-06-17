@@ -32,6 +32,7 @@ namespace AnagramSolver.Tests
         [TestCase("valtis", 0)]
         [TestCase("ledas", 0)]
         [TestCase("miegas", 1)]
+        [TestCase("", 0)]
         public void GetAnagrams_CheckIfGivenWordOutputsExactQuantityAnagrams_ExpectedTrue(string value, int expected)
         {
             List<Anagram> anagrams = new List<Anagram>();
