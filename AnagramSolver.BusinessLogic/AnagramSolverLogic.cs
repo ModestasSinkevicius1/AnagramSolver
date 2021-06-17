@@ -26,19 +26,37 @@ namespace AnagramSolver.BusinessLogic
            
             string wordPattern = $"^[{myWords }]{{{myWords.Length}}}$";
 
-            Regex filterWord = new Regex(wordPattern);           
+            Regex filterWord = new Regex(wordPattern);
 
-            //Checking if given word matches set of characters                       
-            foreach (Anagram ana in _wordRepository.GetWords())
-            {               
-                if(filterWord.IsMatch(ana.Word) && 
-                  !anagramWords.Contains(ana.Word) && 
-                   ana.Word != myWords)
-                    if(IsLetterNotMoreThanGiven(myWords, ana.Word))
-                        anagramWords.Add(ana.Word);                
-            }           
+            anagramWords = GetAnagramWords(filterWord, anagramWords, myWords);
 
             return anagramWords;
+        }
+
+        private List<string> GetAnagramWords(Regex filterWord, IList<string> anagramWords, string myWords)
+        {
+            //Checking if given word matches set of characters                       
+            foreach (Anagram ana in _wordRepository.GetWords())
+            {
+                if (!filterWord.IsMatch(ana.Word))
+                {
+                    continue;
+                }
+                if (anagramWords.Contains(ana.Word))
+                {
+                    continue;
+                }
+                if (ana.Word == myWords)
+                {
+                    continue;
+                }
+                if (IsLetterNotMoreThanGiven(myWords, ana.Word))
+                {
+                    anagramWords.Add(ana.Word);
+                }
+            }          
+
+            return anagramWords as List<string>;
         }
 
         /*checking if anagram has exact letters as given word input.
@@ -55,22 +73,22 @@ namespace AnagramSolver.BusinessLogic
 
             foreach(char targetLetter in refWord)
             {
-                if (!blacklistChar.Contains(targetLetter))
+                if (blacklistChar.Contains(targetLetter))
                 {
-                    foreach (char refLetter in refWord)
-                    {
-                        if (targetLetter == refLetter)
-                            countRefLetter++;
-                    }
-
-                    foreach (char checkLetter in checkWord)
-                    {
-                        if (targetLetter == checkLetter)
-                            countCheckLetter++;
-                    }
-                }
-                else
                     continue;
+                }
+
+                foreach (char refLetter in refWord)
+                {
+                    if (targetLetter == refLetter)
+                        countRefLetter++;
+                }
+
+                foreach (char checkLetter in checkWord)
+                {
+                    if (targetLetter == checkLetter)
+                        countCheckLetter++;
+                }      
 
                 if (countRefLetter != countCheckLetter)
                     return false;
