@@ -19,25 +19,45 @@ namespace AnagramSolver.BusinessLogic
         }
 
         public IList<string> GetAnagrams(string myWords)
-        {
-            IList<string> anagramWords = new List<string>();
-
+        {       
             _wordRepository.GetWords();
-           
-            string wordPattern = $"^[{myWords }]{{{myWords.Length}}}$";
 
-            Regex filterWord = new Regex(wordPattern);           
+            if (myWords == "")
+                myWords = " ";
 
+            string wordPattern = $"^[{myWords}]{{{myWords.Length}}}$";
+
+            Regex filterWord = new Regex(wordPattern);
+
+            List<string> anagramWords = GetAnagramWords(filterWord, myWords);
+
+            return anagramWords;
+        }
+
+        private List<string> GetAnagramWords(Regex filterWord, string myWords)
+        {
+            List<string> anagramWords = new List<string>();
+            
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
             {
-                if (filterWord.IsMatch(ana.Word))
+                if (!filterWord.IsMatch(ana.Word))
                 {
-                    if(!anagramWords.Contains(ana.Word) && ana.Word != myWords)
-                        if(IsLetterNotMoreThanGiven(myWords, ana.Word))
-                            anagramWords.Add(ana.Word);
+                    continue;
                 }
-            }           
+                if (anagramWords.Contains(ana.Word))
+                {
+                    continue;
+                }
+                if (ana.Word == myWords)
+                {
+                    continue;
+                }
+                if (IsLetterNotMoreThanGiven(myWords, ana.Word))
+                {
+                    anagramWords.Add(ana.Word);
+                }
+            }          
 
             return anagramWords;
         }
@@ -55,29 +75,31 @@ namespace AnagramSolver.BusinessLogic
             List<char> blacklistChar = new List<char>();            
 
             foreach(char targetLetter in refWord)
-            {                
-                if (!blacklistChar.Contains(targetLetter))
-                {                    
-                    foreach (char refLetter in refWord)
-                    {
-                        if (targetLetter == refLetter)
-                            countRefLetter++;
-                    }
+            {
+                if (blacklistChar.Contains(targetLetter))
+                {
+                    continue;
+                }
 
-                    foreach (char checkLetter in checkWord)
-                    {
-                        if (targetLetter == checkLetter)
-                            countCheckLetter++;
-                    }
+                foreach (char refLetter in refWord)
+                {
+                    if (targetLetter == refLetter)
+                        countRefLetter++;
+                }
 
-                    if (countRefLetter != countCheckLetter)
-                        return false;
+                foreach (char checkLetter in checkWord)
+                {
+                    if (targetLetter == checkLetter)
+                        countCheckLetter++;
+                }      
 
-                    countRefLetter = 0;
-                    countCheckLetter = 0;
+                if (countRefLetter != countCheckLetter)
+                    return false;
 
-                    blacklistChar.Add(targetLetter);                
-                }                
+                countRefLetter = 0;
+                countCheckLetter = 0;
+
+                blacklistChar.Add(targetLetter);
             }            
 
             return true;
