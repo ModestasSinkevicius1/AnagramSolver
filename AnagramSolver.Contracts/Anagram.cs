@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AnagramSolver.Contracts
+﻿namespace AnagramSolver.Contracts
 {
     public class Anagram
     {

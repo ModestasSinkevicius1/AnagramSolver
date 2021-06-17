@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Cli", "AnagramSolver\AnagramSolver.Cli.csproj", "{0A4F3563-94B0-4667-9EB2-00E188EB8D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnagramSolver.Cli", "AnagramSolver\AnagramSolver.Cli.csproj", "{0A4F3563-94B0-4667-9EB2-00E188EB8D52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.BusinessLogic", "AnagramSolver.BusinessLogic\AnagramSolver.BusinessLogic.csproj", "{F25D0FD1-A639-42E3-A0B4-B785C94BA4D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnagramSolver.BusinessLogic", "AnagramSolver.BusinessLogic\AnagramSolver.BusinessLogic.csproj", "{F25D0FD1-A639-42E3-A0B4-B785C94BA4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Contracts", "AnagramSolver.Contracts\AnagramSolver.Contracts.csproj", "{DE9435CF-4150-488E-BEAD-8E14BFC330A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnagramSolver.Contracts", "AnagramSolver.Contracts\AnagramSolver.Contracts.csproj", "{DE9435CF-4150-488E-BEAD-8E14BFC330A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.Tests", "AnagramSolver.Tests\AnagramSolver.Tests.csproj", "{8960EF15-EE12-482F-AB3E-9EDC5A653126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{DE9435CF-4150-488E-BEAD-8E14BFC330A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE9435CF-4150-488E-BEAD-8E14BFC330A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE9435CF-4150-488E-BEAD-8E14BFC330A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
