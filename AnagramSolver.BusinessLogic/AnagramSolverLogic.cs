@@ -24,7 +24,7 @@ namespace AnagramSolver.BusinessLogic
 
             _wordRepository.GetWords();
            
-            string wordPattern = "^" + "[" + myWords + "]" + "{" + myWords.Length + "}" + "$";            
+            string wordPattern = $"^[{myWords }]{{{myWords.Length}}}$";
 
             Regex filterWord = new Regex(wordPattern);           
 
@@ -47,7 +47,7 @@ namespace AnagramSolver.BusinessLogic
             "refWord" is our given input.
             "checkWord" is anagram. 
         */
-        public bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
+        private bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
             int countRefLetter = 0;
             int countCheckLetter = 0;
