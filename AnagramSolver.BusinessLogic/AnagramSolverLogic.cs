@@ -30,13 +30,12 @@ namespace AnagramSolver.BusinessLogic
 
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
-            {
-                if (filterWord.IsMatch(ana.Word))
-                {
-                    if(!anagramWords.Contains(ana.Word) && ana.Word != myWords)
-                        if(IsLetterNotMoreThanGiven(myWords, ana.Word))
-                            anagramWords.Add(ana.Word);
-                }
+            {               
+                if(filterWord.IsMatch(ana.Word) && 
+                  !anagramWords.Contains(ana.Word) && 
+                   ana.Word != myWords)
+                    if(IsLetterNotMoreThanGiven(myWords, ana.Word))
+                        anagramWords.Add(ana.Word);                
             }           
 
             return anagramWords;
@@ -55,9 +54,9 @@ namespace AnagramSolver.BusinessLogic
             List<char> blacklistChar = new List<char>();            
 
             foreach(char targetLetter in refWord)
-            {                
+            {
                 if (!blacklistChar.Contains(targetLetter))
-                {                    
+                {
                     foreach (char refLetter in refWord)
                     {
                         if (targetLetter == refLetter)
@@ -69,15 +68,17 @@ namespace AnagramSolver.BusinessLogic
                         if (targetLetter == checkLetter)
                             countCheckLetter++;
                     }
+                }
+                else
+                    continue;
 
-                    if (countRefLetter != countCheckLetter)
-                        return false;
+                if (countRefLetter != countCheckLetter)
+                    return false;
 
-                    countRefLetter = 0;
-                    countCheckLetter = 0;
+                countRefLetter = 0;
+                countCheckLetter = 0;
 
-                    blacklistChar.Add(targetLetter);                
-                }                
+                blacklistChar.Add(targetLetter);
             }            
 
             return true;
