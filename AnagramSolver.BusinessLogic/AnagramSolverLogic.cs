@@ -9,13 +9,16 @@ namespace AnagramSolver.BusinessLogic
     {
         private IWordRepository _wordRepository;
 
-        private readonly AnagramConfig _anagramConfig;    
+        //private readonly AnagramConfig _anagramConfig;    
 
-        public AnagramSolverLogic(IWordRepository wordRepository, IOptions<AnagramConfig> anagramConfig)
+        /*Removed temporary AnagramConfig since it's
+          causing unit test not to work properly and currenty 
+          not usable in methods.*/
+        public AnagramSolverLogic(IWordRepository wordRepository)
         {
             _wordRepository = wordRepository;
 
-            _anagramConfig = anagramConfig.Value;
+            //_anagramConfig = anagramConfig.Value;
         }
 
         public IList<string> GetAnagrams(string myWords)
@@ -47,7 +50,7 @@ namespace AnagramSolver.BusinessLogic
             "refWord" is our given input.
             "checkWord" is anagram. 
         */
-        public bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
+        private bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
             int countRefLetter = 0;
             int countCheckLetter = 0;
