@@ -22,10 +22,10 @@ namespace AnagramSolver.BusinessLogic
         public IList<string> GetAnagrams(string myWords)
         {           
             if (myWords == "")
-                throw new WordIsEmptyException("word was empty");
+                throw new WordIsEmptyException("Error: word was empty");
 
             if (_anagramConfig.MinWordLength < myWords.Length)
-                throw new WordTooLongException("input word too long");
+                throw new WordTooLongException("Error: input word too long");
 
             string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
 

@@ -27,6 +27,8 @@ namespace AnagramSolver.Cli
 
                     if (commandWord != "exit")
                     {
+                        Console.WriteLine("Getting anagrams...");
+
                         foreach (string ana in _anagramSolver.GetAnagrams(commandWord))
                         {
                             Console.WriteLine(ana);
@@ -38,12 +40,12 @@ namespace AnagramSolver.Cli
             }
             catch (WordIsEmptyException exc)
             {
-                OutputMessage(exc.Message);
+                OutputMessage($"{ exc.Message } \nPress enter to continue");
                 OutputResult();
             }
             catch (WordTooLongException exc)
             {
-                OutputMessage(exc.Message);
+                OutputMessage($"{ exc.Message } \nPress enter to continue");
                 OutputResult();
             }
             catch (Exception exc)
