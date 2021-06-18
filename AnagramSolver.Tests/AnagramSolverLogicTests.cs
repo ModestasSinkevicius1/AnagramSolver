@@ -85,7 +85,7 @@ namespace AnagramSolver.Tests
             WordTooLongException ex = Assert.Throws<WordTooLongException>(() => anagramSolverLogic.GetAnagrams(value));
 
             string expected = ex.Message;
-            string actual = "input word too long";
+            string actual = "Error: input word too long";
 
             Assert.That(expected, Is.EqualTo(actual));            
         }
@@ -141,7 +141,7 @@ namespace AnagramSolver.Tests
             WordIsEmptyException ex = Assert.Throws<WordIsEmptyException>(() => anagramSolverLogic.GetAnagrams(value));
 
             string expected = ex.Message;
-            string actual = "word was empty";
+            string actual = "Error: word was empty";
 
             Assert.That(expected, Is.EqualTo(actual));
         }
