@@ -50,11 +50,7 @@ namespace AnagramSolver.BusinessLogic
                 if (!filterWord.IsMatch(ana.Word))
                 {
                     continue;
-                }
-                if (anagramWords.Contains(ana.Word))
-                {
-                    continue;
-                }
+                }                
                 if (ana.Word == myWords)
                 {
                     continue;
@@ -76,17 +72,10 @@ namespace AnagramSolver.BusinessLogic
         private bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
             int countRefLetter = 0;
-            int countCheckLetter = 0;
-
-            HashSet<char> blacklistChar = new HashSet<char>();            
+            int countCheckLetter = 0;            
 
             foreach(char targetLetter in refWord)
-            {
-                if (blacklistChar.Contains(targetLetter))
-                {
-                    continue;
-                }
-
+            {                
                 foreach (char refLetter in refWord)
                 {
                     if (targetLetter == refLetter)
@@ -103,9 +92,7 @@ namespace AnagramSolver.BusinessLogic
                     return false;
 
                 countRefLetter = 0;
-                countCheckLetter = 0;
-
-                blacklistChar.Add(targetLetter);
+                countCheckLetter = 0;            
             }            
 
             return true;
