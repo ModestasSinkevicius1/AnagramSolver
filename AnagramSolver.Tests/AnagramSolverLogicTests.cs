@@ -66,7 +66,7 @@ namespace AnagramSolver.Tests
         [TestCase("valtis", 3)]
         [TestCase("ledas", 3)]
         [TestCase("miegas", 3)]
-        [TestCase("", 3)]        
+        [TestCase("", 0)]        
         public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedFail(string value, int length)
         {
             List<Anagram> anagrams = new List<Anagram>();
@@ -98,7 +98,7 @@ namespace AnagramSolver.Tests
         [TestCase("ledas", 5)]
         [TestCase("miegas", 3)]
         [TestCase("", 0)]
-        public void GetAnagrams_CheckIfAnagramResultIsGivenLessOrEqualToParams_ExpectedFail(string value, int total)
+        public void GetAnagrams_CheckIfAnagramResultIsGivenLessOrEqualToParams_ExpectedTrue(string value, int total)
         {
             List<Anagram> anagrams = new List<Anagram>();
 
