@@ -31,8 +31,7 @@ namespace AnagramSolver.Tests
         [TestCase("dažai", 0)]
         [TestCase("valtis", 0)]
         [TestCase("ledas", 0)]
-        [TestCase("miegas", 1)]
-        [TestCase("", 0)]     
+        [TestCase("miegas", 1)]           
         public void GetAnagrams_CheckIfGivenWordOutputsExactQuantityAnagrams_ExpectedTrue(string value, int expected)
         {
             List<Anagram> anagrams = new List<Anagram>();
@@ -65,9 +64,8 @@ namespace AnagramSolver.Tests
         [TestCase("dažai", 3)]
         [TestCase("valtis", 3)]
         [TestCase("ledas", 3)]
-        [TestCase("miegas", 3)]
-        [TestCase("", 3)]        
-        public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedFail(string value, int length)
+        [TestCase("miegas", 3)]               
+        public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedException(string value, int length)
         {
             List<Anagram> anagrams = new List<Anagram>();
 
@@ -83,8 +81,8 @@ namespace AnagramSolver.Tests
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);       
 
-            var ex = Assert.Throws<StringTooLongException>(() => anagramSolverLogic.GetAnagrams(value));            
-            Assert.That(ex.Message, Is.AnyOf("input word too long", null));            
+            var ex = Assert.Throws<WordTooLongException>(() => anagramSolverLogic.GetAnagrams(value));            
+            Assert.That(ex.Message, Is.EqualTo("input word too long"));            
         }
 
         [Test]
@@ -96,8 +94,7 @@ namespace AnagramSolver.Tests
         [TestCase("dažai", 3)]
         [TestCase("valtis", 3)]
         [TestCase("ledas", 5)]
-        [TestCase("miegas", 3)]
-        [TestCase("", 0)]
+        [TestCase("miegas", 3)]       
         public void GetAnagrams_CheckIfAnagramResultIsGivenLessOrEqualToParams_ExpectedTrue(string value, int total)
         {
             List<Anagram> anagrams = new List<Anagram>();
@@ -123,6 +120,22 @@ namespace AnagramSolver.Tests
             int actual = anagram.Count;
 
             Assert.That(actual, Is.LessThanOrEqualTo(expected));
+        }
+
+        [Test]
+        [TestCase("")]       
+        public void GetAnagrams_CheckIfEmptyWordThrowsException_ExpectedException(string value)
+        {
+            List<Anagram> anagrams = new List<Anagram>();            
+
+            mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+            mockAnagramConfig.Setup(p => p.Value).Returns(
+                new AnagramConfig() { MinWordLength = 6, TotalOutputAnagrams = 3 });
+
+            anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
+
+            var ex = Assert.Throws<WordIsEmptyException>(() => anagramSolverLogic.GetAnagrams(value));
+            Assert.That(ex.Message, Is.EqualTo("word was empty"));
         }
     }
 }

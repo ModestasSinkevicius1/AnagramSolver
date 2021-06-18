@@ -36,15 +36,20 @@ namespace AnagramSolver.Cli
                     }
                 }
             }
-            catch(Exception exc)
+            catch (WordIsEmptyException exc)
             {
                 OutputMessage(exc.Message);
-                
-                if (exc.GetType() == typeof(StringTooLongException))
-                {
-                    OutputResult();
-                }                                        
+                OutputResult();
             }
+            catch (WordTooLongException exc)
+            {
+                OutputMessage(exc.Message);
+                OutputResult();
+            }
+            catch (Exception exc)
+            {
+                OutputMessage(exc.Message);                                                                        
+            }         
         }
 
         private void OutputMessage(string message)

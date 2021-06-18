@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
-using System;
+using System.Linq;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -22,12 +22,12 @@ namespace AnagramSolver.BusinessLogic
         public IList<string> GetAnagrams(string myWords)
         {           
             if (myWords == "")
-                return new List<string>();
+                throw new WordIsEmptyException("word was empty");
 
             if (_anagramConfig.MinWordLength < myWords.Length)
-                throw new StringTooLongException("input word too long");
+                throw new WordTooLongException("input word too long");
 
-            string wordPattern = $"^[{myWords}]{{{myWords.Length}}}$";
+            string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
 
             Regex filterWord = new Regex(wordPattern);
 
@@ -38,7 +38,7 @@ namespace AnagramSolver.BusinessLogic
 
         private List<string> GetAnagramWords(Regex filterWord, string myWords)
         {
-            List<string> anagramWords = new List<string>();
+            HashSet<string> anagramWords = new HashSet<string>();
             
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
@@ -65,7 +65,7 @@ namespace AnagramSolver.BusinessLogic
                 }
             }          
 
-            return anagramWords;
+            return anagramWords.ToList();
         }
 
         /*checking if anagram has exact letters as given word input.
@@ -78,7 +78,7 @@ namespace AnagramSolver.BusinessLogic
             int countRefLetter = 0;
             int countCheckLetter = 0;
 
-            List<char> blacklistChar = new List<char>();            
+            HashSet<char> blacklistChar = new HashSet<char>();            
 
             foreach(char targetLetter in refWord)
             {
