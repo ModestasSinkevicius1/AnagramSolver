@@ -13,7 +13,7 @@ namespace AnagramSolver.BusinessLogic
 
             using (StreamReader sr = File.OpenText("zodynas.txt"))
             {
-                string line;                    
+                string line;              
 
                 while((line = sr.ReadLine()) != null)
                 {                      

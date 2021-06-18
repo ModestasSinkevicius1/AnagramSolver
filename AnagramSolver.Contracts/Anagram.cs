@@ -6,7 +6,7 @@
         public string Rule { get; set; }
         public string WordRule { get; set; }
         public int Number { get; set; }
-        
+
         public Anagram(string word, string rule, string wordRule, int number)
         {
             Word = word;

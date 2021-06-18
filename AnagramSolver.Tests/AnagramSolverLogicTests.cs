@@ -49,7 +49,7 @@ namespace AnagramSolver.Tests
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
                         
-            var anagram = anagramSolverLogic.GetAnagrams(value);
+            IList<string> anagram = anagramSolverLogic.GetAnagrams(value);
 
             int actual = anagram.Count;
 
@@ -82,8 +82,12 @@ namespace AnagramSolver.Tests
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);       
 
-            var ex = Assert.Throws<WordTooLongException>(() => anagramSolverLogic.GetAnagrams(value));            
-            Assert.That(ex.Message, Is.EqualTo("input word too long"));            
+            WordTooLongException ex = Assert.Throws<WordTooLongException>(() => anagramSolverLogic.GetAnagrams(value));
+
+            string expected = ex.Message;
+            string actual = "input word too long";
+
+            Assert.That(expected, Is.EqualTo(actual));            
         }
 
         [Test]
@@ -114,10 +118,9 @@ namespace AnagramSolver.Tests
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
 
-            var anagram = anagramSolverLogic.GetAnagrams(value);
+            IList<string> anagram = anagramSolverLogic.GetAnagrams(value);
 
             int expected = mockAnagramConfig.Object.Value.TotalOutputAnagrams;
-
             int actual = anagram.Count;
 
             Assert.That(actual, Is.LessThanOrEqualTo(expected));
@@ -135,8 +138,12 @@ namespace AnagramSolver.Tests
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
 
-            var ex = Assert.Throws<WordIsEmptyException>(() => anagramSolverLogic.GetAnagrams(value));
-            Assert.That(ex.Message, Is.EqualTo("word was empty"));
+            WordIsEmptyException ex = Assert.Throws<WordIsEmptyException>(() => anagramSolverLogic.GetAnagrams(value));
+
+            string expected = ex.Message;
+            string actual = "word was empty";
+
+            Assert.That(expected, Is.EqualTo(actual));
         }
     }
 }

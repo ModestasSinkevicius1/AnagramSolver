@@ -8,7 +8,7 @@ namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverLogic : IAnagramSolver
     {
-        private IWordRepository _wordRepository;
+        private readonly IWordRepository _wordRepository;
 
         private readonly AnagramConfig _anagramConfig;    
 
@@ -72,10 +72,10 @@ namespace AnagramSolver.BusinessLogic
         private bool IsLetterNotMoreThanGiven(string refWord, string checkWord)
         {
             int countRefLetter = 0;
-            int countCheckLetter = 0;            
+            int countCheckLetter = 0;                        
 
             foreach(char targetLetter in refWord)
-            {                
+            {               
                 foreach (char refLetter in refWord)
                 {
                     if (targetLetter == refLetter)
@@ -92,7 +92,7 @@ namespace AnagramSolver.BusinessLogic
                     return false;
 
                 countRefLetter = 0;
-                countCheckLetter = 0;            
+                countCheckLetter = 0;                
             }            
 
             return true;
