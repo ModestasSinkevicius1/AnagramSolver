@@ -66,7 +66,7 @@ namespace AnagramSolver.Tests
         [TestCase("valtis", 3)]
         [TestCase("ledas", 3)]
         [TestCase("miegas", 3)]
-        [TestCase("", 0)]        
+        [TestCase("", 3)]        
         public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedFail(string value, int length)
         {
             List<Anagram> anagrams = new List<Anagram>();
@@ -81,10 +81,10 @@ namespace AnagramSolver.Tests
             mockAnagramConfig.Setup(p => p.Value).Returns(
                 new AnagramConfig() { MinWordLength = length, TotalOutputAnagrams = 3 });
 
-            anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);            
+            anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);       
 
-            var ex = Assert.Throws<StringTooLongException>(() => anagramSolverLogic.GetAnagrams(value));
-            Assert.That(ex.Message, Is.EqualTo("input word too long"));
+            var ex = Assert.Throws<StringTooLongException>(() => anagramSolverLogic.GetAnagrams(value));            
+            Assert.That(ex.Message, Is.AnyOf("input word too long", null));            
         }
 
         [Test]
