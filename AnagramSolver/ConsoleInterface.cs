@@ -6,7 +6,7 @@ namespace AnagramSolver.Cli
 {
     public class ConsoleInterface
     {
-        private IAnagramSolver _anagramSolver;
+        private readonly IAnagramSolver _anagramSolver;
         
         public ConsoleInterface(IAnagramSolver anagramSolver)
         {
@@ -17,7 +17,7 @@ namespace AnagramSolver.Cli
         {
             try
             {
-                string commandWord = "";                
+                string commandWord = "";
 
                 while (commandWord != "exit")
                 {
