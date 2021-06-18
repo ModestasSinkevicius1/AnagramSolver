@@ -23,7 +23,7 @@ namespace AnagramSolver.Tests
         }        
 
         [Test]        
-        [TestCase("labas", 2)]
+        [TestCase("labas", 2)]       
         [TestCase("veidas", 1)]
         [TestCase("mesti", 1)]
         [TestCase("gražu", 0)]
@@ -40,7 +40,8 @@ namespace AnagramSolver.Tests
             anagrams.Add(new Anagram("dievas", null, null, 0));
             anagrams.Add(new Anagram("semti", null, null, 0));
             anagrams.Add(new Anagram("sabal", null, null, 0));
-            anagrams.Add(new Anagram("geimas", null, null, 0));            
+            anagrams.Add(new Anagram("geimas", null, null, 0));
+            anagrams.Add(new Anagram("labas", null, null, 0));
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
