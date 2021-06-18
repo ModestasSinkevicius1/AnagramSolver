@@ -50,11 +50,7 @@ namespace AnagramSolver.BusinessLogic
                 if (!filterWord.IsMatch(ana.Word))
                 {
                     continue;
-                }
-                if (anagramWords.Contains(ana.Word))
-                {
-                    continue;
-                }
+                }                
                 if (ana.Word == myWords)
                 {
                     continue;
@@ -81,12 +77,7 @@ namespace AnagramSolver.BusinessLogic
             HashSet<char> blacklistChar = new HashSet<char>();            
 
             foreach(char targetLetter in refWord)
-            {
-                if (blacklistChar.Contains(targetLetter))
-                {
-                    continue;
-                }
-
+            {          
                 foreach (char refLetter in refWord)
                 {
                     if (targetLetter == refLetter)
