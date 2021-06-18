@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -23,6 +24,9 @@ namespace AnagramSolver.BusinessLogic
             if (myWords == "")
                 return new List<string>();
 
+            if (_anagramConfig.MinWordLength < myWords.Length)
+                throw new StringTooLongException("input word too long");
+
             string wordPattern = $"^[{myWords}]{{{myWords.Length}}}$";
 
             Regex filterWord = new Regex(wordPattern);
@@ -39,6 +43,10 @@ namespace AnagramSolver.BusinessLogic
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
             {
+                if(anagramWords.Count >= _anagramConfig.TotalOutputAnagrams)
+                {
+                    break;
+                }
                 if (!filterWord.IsMatch(ana.Word))
                 {
                     continue;

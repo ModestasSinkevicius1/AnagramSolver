@@ -1,4 +1,5 @@
 ﻿using AnagramSolver.Contracts;
+using AnagramSolver.BusinessLogic;
 using System;
 
 namespace AnagramSolver.Cli
@@ -30,18 +31,28 @@ namespace AnagramSolver.Cli
                         {
                             Console.WriteLine(ana);
                         }
-
-                        Console.WriteLine("Press enter to continue");
-                        Console.ReadLine();
-
-                        Console.Clear();
+                        
+                        OutputMessage("Press enter to continue");
                     }
                 }
             }
             catch(Exception exc)
             {
-                Console.WriteLine(exc.Message);
+                OutputMessage(exc.Message);
+                
+                if (exc.GetType() == typeof(StringTooLongException))
+                {
+                    OutputResult();
+                }                                        
             }
+        }
+
+        private void OutputMessage(string message)
+        {
+            Console.WriteLine(message);
+            Console.ReadLine();
+
+            Console.Clear();
         }
         private string GetMyInput()
         {
