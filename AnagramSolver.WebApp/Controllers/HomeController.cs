@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AnagramSolver.BusinessLogic;
 
 namespace AnagramSolver.WebApp.Controllers
 {
@@ -13,14 +14,18 @@ namespace AnagramSolver.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private AnagramSolverLogic _anagramSolverLogic;
+
+        public HomeController(ILogger<HomeController> logger, 
+                              AnagramSolverLogic anagramSolverLogic)
         {
             _logger = logger;
+            _anagramSolverLogic = anagramSolverLogic;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View("index", _anagramSolverLogic);
         }
 
         public IActionResult Privacy()
