@@ -27,7 +27,7 @@ namespace AnagramSolver.WebApp
         {
             services.AddSingleton<IWordRepository, AnagramSolverWordRepository>();
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
-            //services.Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram));
+            services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
 
             services.AddControllersWithViews();
         }
