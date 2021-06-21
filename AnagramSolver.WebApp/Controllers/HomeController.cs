@@ -23,9 +23,11 @@ namespace AnagramSolver.WebApp.Controllers
             //_anagramSolverLogic = anagramSolverLogic;
         }
 
-        public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic)
-        {                 
-            ViewData["Anagram"] = anagramSolverLogic.GetAnagrams("labas")[0];
+        public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic, string myWords)
+        {
+            if (myWords == null)
+                myWords = "labas";
+            ViewData["Anagrams"] = anagramSolverLogic.GetAnagrams(myWords).ToList();           
 
             return View();
         }
@@ -35,8 +37,9 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Test()
+        public IActionResult Test(string name)
         {
+            ViewData["Name"] = name;
             return View();
         }
 

@@ -1,4 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Anagram Solver";
-} 
-<h1>@ViewData["Anagram"]</h1>
+}
+
+<h2>Type in query to output anagrams. Example:"?myWords=namas"</h2>
+<hr />
+<h2>Result:</h2>
+@{
+    var anagrams = ViewData["Anagrams"] as List<string>;
+}
+@foreach (var anagram in anagrams)
+{
+    <div>
+        <h3>@anagram</h3>
+    </div>
+}
+    

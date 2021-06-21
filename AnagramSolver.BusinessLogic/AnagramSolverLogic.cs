@@ -21,7 +21,7 @@ namespace AnagramSolver.BusinessLogic
 
         public IList<string> GetAnagrams(string myWords)
         {           
-            if (myWords == "")
+            if (myWords == "" || myWords == null)
                 throw new WordIsEmptyException("Error: word was empty");
 
             if (_anagramConfig.MinWordLength < myWords.Length)
