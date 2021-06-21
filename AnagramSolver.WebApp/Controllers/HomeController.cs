@@ -15,18 +15,19 @@ namespace AnagramSolver.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private IAnagramSolver _anagramSolverLogic;
+        //private IAnagramSolver _anagramSolverLogic;
 
-        public HomeController(ILogger<HomeController> logger, 
-            AnagramSolverLogic anagramSolverLogic )
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _anagramSolverLogic = anagramSolverLogic;
+            //_anagramSolverLogic = anagramSolverLogic;
         }
 
-        public IActionResult Index(string myWord)
+        public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic)
         {
-            return View(myWord);
+            List<string> anagrams = anagramSolverLogic.GetAnagrams("labas").ToList();
+            
+            return Content($"{anagrams}");            
         }
 
         public IActionResult Privacy()
