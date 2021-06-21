@@ -1,13 +1,10 @@
 ﻿using AnagramSolver.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using AnagramSolver.BusinessLogic;
 using AnagramSolver.Contracts;
+using PagedList;
 
 namespace AnagramSolver.WebApp.Controllers
 {
