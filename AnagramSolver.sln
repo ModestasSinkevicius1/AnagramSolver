@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnagramSolver.Contracts", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnagramSolver.Tests", "AnagramSolver.Tests\AnagramSolver.Tests.csproj", "{8960EF15-EE12-482F-AB3E-9EDC5A653126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp", "AnagramSolver.WebApp\AnagramSolver.WebApp.csproj", "{026B69C0-4E9A-4376-AF99-0B48EFB315A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnagramSolver.WebApp", "AnagramSolver.WebApp\AnagramSolver.WebApp.csproj", "{F394C7A1-2549-416F-9320-22445BED7918}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8960EF15-EE12-482F-AB3E-9EDC5A653126}.Release|Any CPU.Build.0 = Release|Any CPU
-		{026B69C0-4E9A-4376-AF99-0B48EFB315A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{026B69C0-4E9A-4376-AF99-0B48EFB315A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{026B69C0-4E9A-4376-AF99-0B48EFB315A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{026B69C0-4E9A-4376-AF99-0B48EFB315A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F394C7A1-2549-416F-9320-22445BED7918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F394C7A1-2549-416F-9320-22445BED7918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F394C7A1-2549-416F-9320-22445BED7918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F394C7A1-2549-416F-9320-22445BED7918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
