@@ -24,7 +24,7 @@ namespace AnagramSolver.BusinessLogic
             if (myWords == "")
                 throw new WordIsEmptyException("Error: word was empty");
 
-            if (_anagramConfig.MinWordLength < myWords.Length)
+            if (6 < myWords.Length)
                 throw new WordTooLongException("Error: input word too long");     
 
             string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
@@ -43,7 +43,7 @@ namespace AnagramSolver.BusinessLogic
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
             {
-                if(anagramWords.Count >= _anagramConfig.TotalOutputAnagrams)
+                if(anagramWords.Count >= 3)
                 {
                     break;
                 }

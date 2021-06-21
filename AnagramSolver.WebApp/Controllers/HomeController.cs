@@ -24,10 +24,10 @@ namespace AnagramSolver.WebApp.Controllers
         }
 
         public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic)
-        {
-            List<string> anagrams = anagramSolverLogic.GetAnagrams("labas").ToList();
-            
-            return Content($"{anagrams[0]}");           
+        {                 
+            ViewData["Anagram"] = anagramSolverLogic.GetAnagrams("labas")[0];
+
+            return View();
         }
 
         public IActionResult Privacy()
