@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AnagramSolver.BusinessLogic;
+using AnagramSolver.Contracts;
 
 namespace AnagramSolver.WebApp.Controllers
 {
@@ -14,21 +15,26 @@ namespace AnagramSolver.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private AnagramSolverLogic _anagramSolverLogic;
+        private IAnagramSolver _anagramSolverLogic;
 
         public HomeController(ILogger<HomeController> logger, 
-                              AnagramSolverLogic anagramSolverLogic)
+            AnagramSolverLogic anagramSolverLogic )
         {
             _logger = logger;
             _anagramSolverLogic = anagramSolverLogic;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string myWord)
         {
-            return View("index", _anagramSolverLogic);
+            return View(myWord);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Test()
         {
             return View();
         }

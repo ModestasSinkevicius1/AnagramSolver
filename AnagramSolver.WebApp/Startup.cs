@@ -1,3 +1,5 @@
+using AnagramSolver.BusinessLogic;
+using AnagramSolver.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,6 +25,10 @@ namespace AnagramSolver.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IWordRepository, AnagramSolverWordRepository>();
+            services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
+            //services.Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram));
+
             services.AddControllersWithViews();
         }
 
