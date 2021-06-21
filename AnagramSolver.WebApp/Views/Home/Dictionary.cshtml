@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Dictionary Page";
+    
+    var words = ViewData["Words"] as List<AnagramSolver.Contracts.Anagram>;  
+}
+
+@foreach(var word in words)
+            {
+<h1>@word.Word</h1>
+            }
+

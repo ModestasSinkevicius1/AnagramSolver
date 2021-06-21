@@ -15,19 +15,24 @@ namespace AnagramSolver.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        //private IAnagramSolver _anagramSolverLogic;
+        private IAnagramSolver _anagramSolverLogic;
+        private IWordRepository _wordRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+            IAnagramSolver anagramSolverLogic,
+            IWordRepository wordRepository)
         {
             _logger = logger;
-            //_anagramSolverLogic = anagramSolverLogic;
+            _anagramSolverLogic = anagramSolverLogic;
+            _wordRepository = wordRepository;
         }
 
-        public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic, string myWords)
+        public IActionResult Index(string myWords)
         {
-            if (myWords == null)
-                myWords = "labas";
-            ViewData["Anagrams"] = anagramSolverLogic.GetAnagrams(myWords).ToList();           
+            if (string.IsNullOrWhiteSpace(myWords))
+                return new EmptyResult();
+
+            ViewData["Anagrams"] = _anagramSolverLogic.GetAnagrams(myWords).ToList();           
 
             return View();
         }
@@ -37,9 +42,9 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Test(string name)
+        public IActionResult Dictionary()
         {
-            ViewData["Name"] = name;
+            ViewData["Words"] = _wordRepository.GetWords();
             return View();
         }
 
