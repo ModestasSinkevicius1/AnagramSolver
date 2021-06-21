@@ -5,7 +5,7 @@
 }
 
 @foreach(var word in words)
-            {
-<h1>@word.Word</h1>
-            }
+{
+    <h1><a href="/?myWords=@word.Word">@word.Word</a></h1>
+}
 
