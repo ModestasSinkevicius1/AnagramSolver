@@ -27,7 +27,7 @@ namespace AnagramSolver.WebApp.Controllers
         {
             List<string> anagrams = anagramSolverLogic.GetAnagrams("labas").ToList();
             
-            return Content($"{anagrams}");            
+            return Content($"{anagrams[0]}");           
         }
 
         public IActionResult Privacy()

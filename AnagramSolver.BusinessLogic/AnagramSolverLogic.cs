@@ -24,10 +24,8 @@ namespace AnagramSolver.BusinessLogic
             if (myWords == "")
                 throw new WordIsEmptyException("Error: word was empty");
 
-            /*
-              if (_anagramConfig.MinWordLength < myWords.Length)
-                throw new WordTooLongException("Error: input word too long");
-            */
+            if (_anagramConfig.MinWordLength < myWords.Length)
+                throw new WordTooLongException("Error: input word too long");     
 
             string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
 
