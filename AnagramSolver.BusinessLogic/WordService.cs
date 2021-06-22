@@ -15,22 +15,17 @@ namespace AnagramSolver.BusinessLogic
 
         public List<string> GetWords(int pageNumber, int pageSize)
         {
-            try
+            if (pageNumber < 0 || pageSize <= 0)
             {
-                if (pageNumber < 0 || pageSize <= 0)
-                    throw new PageNumberOrPageSizeRestrictedException
-                        ("Error: Bad page number or page size detected");                
-
-                var words = _wordRepository.GetWords().Select(o => o.Word)
-                  .Skip(pageSize * pageNumber)
-                  .Take(pageSize);
-
-                return words.ToList();
+                pageNumber = 0;
+                pageSize = 100;
             }
-            catch
-            {
-                return GetWords(0, 100);
-            }
+            
+            var words = _wordRepository.GetWords().Select(o => o.Word)
+                .Skip(pageSize * pageNumber)
+                .Take(pageSize);
+
+            return words.ToList();           
         }
     }
 }

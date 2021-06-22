@@ -5,7 +5,7 @@
     var anagrams = ViewData["Anagrams"] as List<string>;
 }
 
-@using (Html.BeginForm("GetWordFromIndexPage", null, FormMethod.Post))
+@using (Html.BeginForm("index", null, FormMethod.Post))
 {
     <input type="text" name="word" />
     <input type="submit" value="Enter" />

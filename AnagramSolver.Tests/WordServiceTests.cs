@@ -51,6 +51,39 @@ namespace AnagramSolver.Tests
         }
 
         [Test]
+        [TestCase(2, 3)]        
+        public void GetWords_CheckIfGivenPageNumberOrSizeGivesExpectedWords_ExpectedTrue(int pageNumber, int pageSize)
+        {
+            List<Anagram> anagrams = new()
+            {
+                new Anagram("balas", null, null, 0),
+                new Anagram("dievas", null, null, 0),
+                new Anagram("semti", null, null, 0),
+                new Anagram("sabal", null, null, 0),
+                new Anagram("geimas", null, null, 0),
+                new Anagram("salab", null, null, 0),
+                new Anagram("itsem", null, null, 0),
+                new Anagram("svetaine", null, null, 0),
+                new Anagram("krabas", null, null, 0),
+                new Anagram("stalas", null, null, 0)
+            };
+
+            mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+
+            wordService = new WordService(mockWordRepository.Object);
+
+            List<string> actual = wordService.GetWords(pageNumber, pageSize);
+            List<string> expected = new()
+            {
+                new string("itsem"),
+                new string("svetaine"),
+                new string("krabas")
+            };
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
         [TestCase(-1, 10)]
         [TestCase(0, -10)]
         [TestCase(0, 0)]
