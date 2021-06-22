@@ -76,10 +76,10 @@ namespace AnagramSolver.Tests
 
             wordService = new WordService(mockWordRepository.Object);
 
-            int expected = wordService.GetWords(pageNumber, pageSize).Count;
-            int actual = 10;
+            int actual = wordService.GetWords(pageNumber, pageSize).Count;
+            int expected = 10;
 
-            Assert.That(expected, Is.EqualTo(actual));
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

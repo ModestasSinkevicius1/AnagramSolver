@@ -6,6 +6,6 @@
 
 @foreach(var word in words)
 {
-    <h1><a href="/?myWords=@word">@word</a></h1>
+    <h1>@Html.ActionLink(word, "Index", @"Home", new { myWords = word }, null)</h1>    
 }
 
