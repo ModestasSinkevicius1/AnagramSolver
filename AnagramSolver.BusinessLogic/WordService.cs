@@ -21,10 +21,10 @@ namespace AnagramSolver.BusinessLogic
 
             foreach (Anagram word in _wordRepository.GetWords().Skip(pageNumber * pageSize))
             {
-                if (i < pageSize)
-                    words.Add(word.Word);
-                else
+                if (i >= pageSize)
                     break;
+
+                words.Add(word.Word);               
                 i++;
             }
             return words;
