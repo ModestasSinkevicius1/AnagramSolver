@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using AnagramSolver.Contracts;
-using PagedList;
 
 namespace AnagramSolver.WebApp.Controllers
 {
@@ -13,15 +12,15 @@ namespace AnagramSolver.WebApp.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private IAnagramSolver _anagramSolverLogic;
-        private IWordRepository _wordRepository;
+        private IWordService _wordService;
 
         public HomeController(ILogger<HomeController> logger, 
             IAnagramSolver anagramSolverLogic,
-            IWordRepository wordRepository)
+            IWordService wordService)
         {
             _logger = logger;
             _anagramSolverLogic = anagramSolverLogic;
-            _wordRepository = wordRepository;
+            _wordService = wordService;
         }
 
         public IActionResult Index(string myWords)
@@ -39,9 +38,9 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Dictionary()
+        public IActionResult Dictionary(int pageNumber, int pageSize)
         {
-            ViewData["Words"] = _wordRepository.GetWords();
+            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize);
             return View();
         }
 
