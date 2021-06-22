@@ -15,19 +15,13 @@ namespace AnagramSolver.BusinessLogic
 
         public List<string> GetWords(int pageNumber, int pageSize)
         {
-            List<string> words = new List<string>();
+            //List<string> words = _wordRepository.GetWords().SelectMany(o => o.Word);
             
-            int i = 0;
+            var words = _wordRepository.GetWords().Select(o => o.Word)
+              .Skip(pageSize * pageNumber)
+              .Take(pageSize);
 
-            foreach (Anagram word in _wordRepository.GetWords().Skip(pageNumber * pageSize))
-            {
-                if (i >= pageSize)
-                    break;
-
-                words.Add(word.Word);               
-                i++;
-            }
-            return words;
+            return words.ToList();
         }
     }
 }
