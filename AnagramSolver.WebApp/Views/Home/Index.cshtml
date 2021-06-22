@@ -4,10 +4,16 @@
 @{
     var anagrams = ViewData["Anagrams"] as List<string>;
 }
+
+@using (Html.BeginForm("GetWord", null, FormMethod.Post))
+{
+    <input type="text" name="word" />
+    <input type="submit" value="Enter" />
+}
+
 @foreach (var anagram in anagrams)
 {
     <div>
         <h3>@anagram</h3>
     </div>
 }
-    
