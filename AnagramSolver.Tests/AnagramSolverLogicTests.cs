@@ -34,14 +34,15 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 1)]           
         public void GetAnagrams_CheckIfGivenWordOutputsExactQuantityAnagrams_ExpectedTrue(string value, int expected)
         {
-            List<Anagram> anagrams = new List<Anagram>();
-
-            anagrams.Add(new Anagram("balas", null, null, 0));
-            anagrams.Add(new Anagram("dievas", null, null, 0));
-            anagrams.Add(new Anagram("semti", null, null, 0));
-            anagrams.Add(new Anagram("sabal", null, null, 0));
-            anagrams.Add(new Anagram("geimas", null, null, 0));
-            anagrams.Add(new Anagram("labas", null, null, 0));
+            List<Anagram> anagrams = new()
+            {
+                new Anagram("balas", null, null, 0),
+                new Anagram("dievas", null, null, 0),
+                new Anagram("semti", null, null, 0),
+                new Anagram("sabal", null, null, 0),
+                new Anagram("geimas", null, null, 0),
+                new Anagram("labas", null, null, 0)
+            };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
@@ -68,13 +69,14 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 3)]               
         public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedException(string value, int length)
         {
-            List<Anagram> anagrams = new List<Anagram>();
-
-            anagrams.Add(new Anagram("balas", null, null, 0));
-            anagrams.Add(new Anagram("dievas", null, null, 0));
-            anagrams.Add(new Anagram("semti", null, null, 0));
-            anagrams.Add(new Anagram("sabal", null, null, 0));
-            anagrams.Add(new Anagram("geimas", null, null, 0));
+            List<Anagram> anagrams = new()
+            {
+                new Anagram("balas", null, null, 0),
+                new Anagram("dievas", null, null, 0),
+                new Anagram("semti", null, null, 0),
+                new Anagram("sabal", null, null, 0),
+                new Anagram("geimas", null, null, 0)
+            };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
@@ -102,15 +104,16 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 3)]       
         public void GetAnagrams_CheckIfAnagramResultIsGivenLessOrEqualToParams_ExpectedTrue(string value, int total)
         {
-            List<Anagram> anagrams = new List<Anagram>();
-
-            anagrams.Add(new Anagram("balas", null, null, 0));
-            anagrams.Add(new Anagram("dievas", null, null, 0));
-            anagrams.Add(new Anagram("semti", null, null, 0));
-            anagrams.Add(new Anagram("sabal", null, null, 0));
-            anagrams.Add(new Anagram("geimas", null, null, 0));
-            anagrams.Add(new Anagram("salab", null, null, 0));
-            anagrams.Add(new Anagram("itsem", null, null, 0));
+            List<Anagram> anagrams = new()
+            {
+                new Anagram("balas", null, null, 0),
+                new Anagram("dievas", null, null, 0),
+                new Anagram("semti", null, null, 0),
+                new Anagram("sabal", null, null, 0),
+                new Anagram("geimas", null, null, 0),
+                new Anagram("salab", null, null, 0),
+                new Anagram("itsem", null, null, 0)
+            };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
@@ -130,7 +133,7 @@ namespace AnagramSolver.Tests
         [TestCase("")]       
         public void GetAnagrams_CheckIfEmptyWordThrowsException_ExpectedException(string value)
         {
-            List<Anagram> anagrams = new List<Anagram>();            
+            List<Anagram> anagrams = new();            
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
