@@ -2,14 +2,9 @@ using AnagramSolver.BusinessLogic;
 using AnagramSolver.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AnagramSolver.WebApp
 {
@@ -27,6 +22,7 @@ namespace AnagramSolver.WebApp
         {
             services.AddSingleton<IWordRepository, AnagramSolverWordRepository>();
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
+            services.AddSingleton<IWordService, WordService>();
             services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
 
             services.AddControllersWithViews();
@@ -56,7 +52,7 @@ namespace AnagramSolver.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Dictionary}/{id?}");
             });
         }
     }

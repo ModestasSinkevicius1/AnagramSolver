@@ -1,12 +1,8 @@
 ﻿using AnagramSolver.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using AnagramSolver.BusinessLogic;
 using AnagramSolver.Contracts;
 
 namespace AnagramSolver.WebApp.Controllers
@@ -15,17 +11,24 @@ namespace AnagramSolver.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        //private IAnagramSolver _anagramSolverLogic;
+        private IAnagramSolver _anagramSolverLogic;
+        private IWordService _wordService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+            IAnagramSolver anagramSolverLogic,
+            IWordService wordService)
         {
             _logger = logger;
-            //_anagramSolverLogic = anagramSolverLogic;
+            _anagramSolverLogic = anagramSolverLogic;
+            _wordService = wordService;
         }
 
-        public IActionResult Index([FromServices] IAnagramSolver anagramSolverLogic)
-        {                 
-            ViewData["Anagram"] = anagramSolverLogic.GetAnagrams("labas")[0];
+        public IActionResult Index(string myWords)
+        {
+            if (string.IsNullOrWhiteSpace(myWords))
+                return new EmptyResult();
+
+            ViewData["Anagrams"] = _anagramSolverLogic.GetAnagrams(myWords).ToList();           
 
             return View();
         }
@@ -35,8 +38,11 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Test()
+        public IActionResult Dictionary(int pageNumber, int pageSize)
         {
+            ViewData["pageNumber"] = pageNumber;
+            ViewData["pageSize"] = pageSize;
+            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize);
             return View();
         }
 

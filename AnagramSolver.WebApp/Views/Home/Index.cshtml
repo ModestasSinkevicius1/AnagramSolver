@@ -1,4 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Anagram Solver";
-} 
-<h1>@ViewData["Anagram"]</h1>
+}
+@{
+    var anagrams = ViewData["Anagrams"] as List<string>;
+}
+@foreach (var anagram in anagrams)
+{
+    <div>
+        <h3>@anagram</h3>
+    </div>
+}
+    
