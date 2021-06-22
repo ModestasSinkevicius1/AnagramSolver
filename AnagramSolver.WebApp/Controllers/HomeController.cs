@@ -33,11 +33,6 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult GetWordFromIndexPage(string word)
-        {
-            return Redirect($"index?myWords={word}");
-        }
-
         public IActionResult Privacy()
         {
             return View();
