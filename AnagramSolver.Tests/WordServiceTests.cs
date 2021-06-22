@@ -75,9 +75,9 @@ namespace AnagramSolver.Tests
             List<string> actual = wordService.GetWords(pageNumber, pageSize);
             List<string> expected = new()
             {
-                new string("itsem"),
-                new string("svetaine"),
-                new string("krabas")
+                "itsem",
+                "svetaine",
+                "krabas"
             };
 
             Assert.That(actual, Is.EqualTo(expected));
