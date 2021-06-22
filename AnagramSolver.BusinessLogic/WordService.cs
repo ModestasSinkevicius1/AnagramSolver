@@ -15,7 +15,10 @@ namespace AnagramSolver.BusinessLogic
 
         public List<string> GetWords(int pageNumber, int pageSize)
         {
-            if (pageNumber < 0 || pageSize <= 0)
+            if (pageNumber < 0)
+                pageNumber = 0;               
+
+            if(pageNumber * pageSize <= 0 && pageSize <= 0)
             {
                 pageNumber = 0;
                 pageSize = 100;
