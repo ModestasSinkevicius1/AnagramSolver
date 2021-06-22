@@ -18,7 +18,8 @@ namespace AnagramSolver.BusinessLogic
             try
             {
                 if (pageNumber < 0 || pageSize <= 0)
-                    throw new BadInputException("Bad page number or size detected");                
+                    throw new PageNumberOrPageSizeRestrictedException
+                        ("Bad page number or page size detected");                
 
                 var words = _wordRepository.GetWords().Select(o => o.Word)
                   .Skip(pageSize * pageNumber)

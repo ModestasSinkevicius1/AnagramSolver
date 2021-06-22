@@ -39,9 +39,7 @@ namespace AnagramSolver.WebApp.Controllers
         }
 
         public IActionResult Dictionary(int pageNumber, int pageSize)
-        {
-            ViewData["pageNumber"] = pageNumber;
-            ViewData["pageSize"] = pageSize;
+        {   
             ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize);
             return View();
         }
