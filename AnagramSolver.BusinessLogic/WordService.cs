@@ -1,5 +1,6 @@
 ﻿using AnagramSolver.Contracts;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -15,17 +16,17 @@ namespace AnagramSolver.BusinessLogic
         public List<string> GetWords(int pageNumber, int pageSize)
         {
             List<string> words = new List<string>();
-           
-            if (pageNumber <= 0)
-                pageNumber = 1;
+            
+            int i = 0;
 
-            int totalPageSize = pageSize * pageNumber;
-
-            for(int i = totalPageSize - pageSize; i < totalPageSize; i++)
+            foreach (Anagram word in _wordRepository.GetWords().Skip(pageNumber * pageSize))
             {
-                words.Add(_wordRepository.GetWords()[i].Word);
-            }           
-
+                if (i < pageSize)
+                    words.Add(word.Word);
+                else
+                    break;
+                i++;
+            }
             return words;
         }
     }
