@@ -52,7 +52,7 @@ namespace AnagramSolver.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=AnagramAPI}/{action=GetAnagrams}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
