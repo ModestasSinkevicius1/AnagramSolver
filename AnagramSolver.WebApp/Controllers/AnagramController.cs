@@ -13,7 +13,7 @@ namespace AnagramSolver.WebApp.Controllers
     public class AnagramController : ControllerBase
     {
         private IAnagramSolver _anagramSolverLogic;        
-
+        
         public AnagramController(IAnagramSolver anagramSolverLogic)
         {            
             _anagramSolverLogic = anagramSolverLogic;            
