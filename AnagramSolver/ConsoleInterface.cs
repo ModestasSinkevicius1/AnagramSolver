@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace AnagramSolver.Cli
 {
@@ -47,9 +48,9 @@ namespace AnagramSolver.Cli
                     if(commandWord == "http")
                     {
                         Console.WriteLine("Type here a request");
-                        //commandWord = Console.ReadLine();
+                        commandWord = Console.ReadLine();
                         
-                        RequestToServer("labas").Wait();             
+                        RequestToServer(commandWord).Wait();             
 
                         OutputMessage("Press enter to continue");
                     }
@@ -85,7 +86,12 @@ namespace AnagramSolver.Cli
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine(responseBody);
+                List<string> words = JsonConvert.DeserializeObject<List<string>>(responseBody);
+
+                foreach(string word in words)
+                {
+                    Console.WriteLine(word);
+                }               
             }
             catch (HttpRequestException e)
             {
