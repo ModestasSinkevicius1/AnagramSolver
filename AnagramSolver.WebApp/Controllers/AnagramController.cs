@@ -27,7 +27,7 @@ namespace AnagramSolver.WebApp.Controllers
 
             List<string> response = _anagramSolverLogic.GetAnagrams(myWord).ToList();
 
-            return response;
+            return Ok(response);
         }
     }
 }
