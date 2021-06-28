@@ -13,14 +13,14 @@ namespace AnagramSolver.WebApp.Controllers
         
         public AnagramController(IAnagramSolver anagramSolverLogic)
         {            
-            _anagramSolverLogic = anagramSolverLogic;            
+            _anagramSolverLogic = anagramSolverLogic;        
         }
 
         [HttpGet]
         public ActionResult<List<string>> GetAnagrams([FromQuery]string myWord)
         {
             if (string.IsNullOrWhiteSpace(myWord))
-                return StatusCode(400);
+                return BadRequest();
 
             List<string> response = _anagramSolverLogic.GetAnagrams(myWord).ToList();
 

@@ -8,6 +8,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
 
 namespace AnagramSolver.Cli
 {
@@ -17,9 +18,12 @@ namespace AnagramSolver.Cli
 
         static readonly HttpClient client = new HttpClient();
 
-        public ConsoleInterface(IAnagramSolver anagramSolver)
+        private readonly URIConfig _uriConfig;
+
+        public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig)
         {
             _anagramSolver = anagramSolver;
+            _uriConfig = uriConfig.Value;
         }
 
         public void OutputResult()
@@ -78,9 +82,9 @@ namespace AnagramSolver.Cli
 
             try
             {
-                var builder = new UriBuilder("http://localhost:8080/api/anagram");
+                var builder = new UriBuilder(_uriConfig.Uri);
 
-                builder.Query = $"myWoRD={myWord}";
+                builder.Query = $"myWord={myWord}";
 
                 HttpResponseMessage response = await client.GetAsync(builder.Uri);
                 response.EnsureSuccessStatusCode();
