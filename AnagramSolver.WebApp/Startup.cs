@@ -24,6 +24,7 @@ namespace AnagramSolver.WebApp
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
             services.AddSingleton<IWordService, WordService>();
             services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
+            services.Configure<ContentConfig>(Configuration.GetSection(ContentConfig.Content));
 
             services.AddControllersWithViews();
         }
@@ -52,7 +53,7 @@ namespace AnagramSolver.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Dictionary}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
