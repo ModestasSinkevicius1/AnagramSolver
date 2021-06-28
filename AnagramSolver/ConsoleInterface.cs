@@ -4,9 +4,6 @@ using System;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Collections.Generic;
-using System.Web;
-using System.Text.RegularExpressions;
-using System.Linq;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 
@@ -16,7 +13,7 @@ namespace AnagramSolver.Cli
     {
         private readonly IAnagramSolver _anagramSolver;
 
-        static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new HttpClient();
 
         private readonly URIConfig _uriConfig;
 

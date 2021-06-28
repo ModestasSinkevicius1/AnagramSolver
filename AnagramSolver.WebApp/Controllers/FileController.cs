@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using AnagramSolver.Contracts;
@@ -17,15 +16,16 @@ namespace AnagramSolver.WebApp.Controllers
 
         public async Task<IActionResult> DownloadDictionary()
         {
-            var path = $"{_contentConfig.DictionaryPath}{_contentConfig.ContentName}";
-            var memory = new MemoryStream();
-            using(FileStream fs = new FileStream(path, FileMode.Open))
+            string path = _contentConfig.DictionaryPath;
+            MemoryStream memory = new();
+
+            using (FileStream fs = new(path, FileMode.Open))
             {
                 await fs.CopyToAsync(memory);
             }
             memory.Position = 0;           
 
-            return File(memory, "text/plain", _contentConfig.ContentName);
+            return File(memory, "text/plain", "zodynas.txt");
         }
     }
 }
