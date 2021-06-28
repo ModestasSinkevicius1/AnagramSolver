@@ -23,7 +23,8 @@ namespace AnagramSolver.WebApp
             services.AddSingleton<IWordRepository, AnagramSolverWordRepository>();
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
             services.AddSingleton<IWordService, WordService>();
-            services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));            
+            services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
+            services.Configure<ContentConfig>(Configuration.GetSection(ContentConfig.Content));
 
             services.AddControllersWithViews();
         }
