@@ -29,7 +29,7 @@ namespace AnagramSolver.BusinessLogic
 
             string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
 
-            Regex filterWord = new Regex(wordPattern);
+            Regex filterWord = new(wordPattern);
 
             List<string> anagramWords = GetAnagramWords(filterWord, myWords);
 
@@ -38,7 +38,7 @@ namespace AnagramSolver.BusinessLogic
 
         private List<string> GetAnagramWords(Regex filterWord, string myWords)
         {
-            HashSet<string> anagramWords = new HashSet<string>();
+            HashSet<string> anagramWords = new();
             
             //Checking if given word matches set of characters                       
             foreach (Anagram ana in _wordRepository.GetWords())
