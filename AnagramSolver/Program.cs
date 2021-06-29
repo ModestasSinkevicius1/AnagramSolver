@@ -37,6 +37,7 @@ namespace AnagramSolver.Cli
                         AddSingleton<IAnagramSolver, AnagramSolverLogic>().
                         AddSingleton<ConsoleInterface>().
                         Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram)).
-                        Configure<URIConfig>(context.Configuration.GetSection(URIConfig.ClientUriRequest)));                            
+                        Configure<URIConfig>(context.Configuration.GetSection(URIConfig.ClientUriRequest)).
+                        Configure<DBConnectionConfig>(context.Configuration.GetSection(DBConnectionConfig.DBConnection)));                            
     }
 }
