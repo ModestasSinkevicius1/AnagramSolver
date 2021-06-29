@@ -9,60 +9,26 @@ using Microsoft.Extensions.Options;
 namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverWordRepository : IWordRepository
-    {
-        private DBConnectionConfig _dbConConf;
-        public AnagramSolverWordRepository(IOptions<DBConnectionConfig> dbConConf)
-        {
-            _dbConConf = dbConConf.Value;
-        }
-
-
-        public IList<Anagram> GetWords()
+    {       
+        public IList<WordModel> GetWords()
         {           
-            IList<Anagram> anagrams = new List<Anagram>();
+            IList<WordModel> anagrams = new List<WordModel>();
 
             using (StreamReader sr = File.OpenText("zodynas.txt"))
             {
-                string line;              
+                string line;
+
+                int row = 0;
 
                 while((line = sr.ReadLine()) != null)
                 {                      
                     string[] wordPart = line.Split("\t");
                         
-                    anagrams.Add(new Anagram(wordPart[0], wordPart[1], wordPart[2], Convert.ToInt32(wordPart[3])));
+                    anagrams.Add(new WordModel(row++, wordPart[0], Convert.ToInt32(wordPart[3])));
                 }                   
             }
 
             return anagrams;                        
-        }
-
-        public IList<WordModel> GetWordsDB()
-        {
-            IList<WordModel> words = new List<WordModel>();
-
-            SqlConnection cn = new();
-            cn.ConnectionString = _dbConConf.ConnectionString;
-            cn.Open();
-
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = cn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Word";
-            SqlDataReader dr = cmd.ExecuteReader();
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    words.Add(new WordModel(Convert.ToInt32(dr["Id"]), 
-                        Convert.ToString(dr["Word"]), 
-                        Convert.ToInt32(dr["Category"])));
-                }
-            }
-            dr.Close();
-
-            cn.Close();
-
-            return words;
-        }
+        }        
     }
 }

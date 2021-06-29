@@ -90,14 +90,14 @@ namespace AnagramSolver.Cli
 
             SqlCommand cmd;            
 
-            foreach (Anagram ana in _wordRepository.GetWords())
+            foreach (WordModel ana in _wordRepository.GetWords())
             {
                 cmd = new();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "WordInsert";
                 cmd.Parameters.Add(new SqlParameter("@Word", ana.Word));
-                cmd.Parameters.Add(new SqlParameter("@Category", ana.Number));
+                cmd.Parameters.Add(new SqlParameter("@Category", ana.Category));
                 cmd.ExecuteNonQuery();
             }
 

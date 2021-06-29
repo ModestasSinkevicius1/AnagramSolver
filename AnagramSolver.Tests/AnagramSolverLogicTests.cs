@@ -34,14 +34,14 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 1)]           
         public void GetAnagrams_CheckIfGivenWordOutputsExactQuantityAnagrams_ExpectedTrue(string value, int expected)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0),
-                new Anagram("labas", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0),
+                new WordModel(5, "labas", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
@@ -69,13 +69,13 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 3)]               
         public void GetAnagrams_CheckIfGivenWordLengthThrowsException_ExpectedException(string value, int length)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
@@ -104,15 +104,15 @@ namespace AnagramSolver.Tests
         [TestCase("miegas", 3)]       
         public void GetAnagrams_CheckIfAnagramResultIsGivenLessOrEqualToParams_ExpectedTrue(string value, int total)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0),
-                new Anagram("salab", null, null, 0),
-                new Anagram("itsem", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0),
+                new WordModel(5, "salab", 0),
+                new WordModel(6, "itsem", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
@@ -133,7 +133,7 @@ namespace AnagramSolver.Tests
         [TestCase("")]       
         public void GetAnagrams_CheckIfEmptyWordThrowsException_ExpectedException(string value)
         {
-            List<Anagram> anagrams = new();            
+            List<WordModel> anagrams = new();            
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
             mockAnagramConfig.Setup(p => p.Value).Returns(
