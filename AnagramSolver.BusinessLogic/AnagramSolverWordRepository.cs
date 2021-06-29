@@ -47,7 +47,7 @@ namespace AnagramSolver.BusinessLogic
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Person";
+            cmd.CommandText = "SELECT * FROM Word";
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
             {
