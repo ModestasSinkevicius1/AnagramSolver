@@ -33,12 +33,9 @@ namespace AnagramSolver.Cli
         }
 
         public void OutputResult()
-        {
-            //Console.WriteLine("Connecting DB..");
+        {            
             try
             {
-                //StoreDataToDB();
-                //Console.WriteLine("Writing complete!");
                 string commandWord = "";
 
                 while (commandWord != "exit")
@@ -88,9 +85,7 @@ namespace AnagramSolver.Cli
         void StoreDataToDB()
         {
             SqlConnection cn = new SqlConnection();
-            cn.ConnectionString = $"Server={_dbConConfig.Server};" +
-                $"Database={_dbConConfig.Database};" +
-                $"Integrated Security={_dbConConfig.Integrated_security}";
+            cn.ConnectionString = _dbConConfig.ConnectionString;
             cn.Open();
 
             SqlCommand cmd;            
@@ -105,7 +100,7 @@ namespace AnagramSolver.Cli
                 cmd.Parameters.Add(new SqlParameter("@Category", ana.Number));
                 cmd.ExecuteNonQuery();
             }
-            
+
             cn.Close();
         }
 
