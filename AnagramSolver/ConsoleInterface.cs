@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace AnagramSolver.Cli
 {
@@ -17,16 +19,26 @@ namespace AnagramSolver.Cli
 
         private readonly URIConfig _uriConfig;
 
-        public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig)
+        private readonly DBConnectionConfig _dbConConfig;
+
+        private readonly IWordRepository _wordRepository;
+
+        public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig,
+            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository)
         {
             _anagramSolver = anagramSolver;
             _uriConfig = uriConfig.Value;
+            _dbConConfig = dbConConfig.Value;
+            _wordRepository = wordRepository;
         }
 
         public void OutputResult()
         {
+            //Console.WriteLine("Connecting DB..");
             try
             {
+                //StoreDataToDB();
+                //Console.WriteLine("Writing complete!");
                 string commandWord = "";
 
                 while (commandWord != "exit")
@@ -71,6 +83,30 @@ namespace AnagramSolver.Cli
             {
                 OutputMessage(exc.Message);                                                                        
             }         
+        }
+
+        void StoreDataToDB()
+        {
+            SqlConnection cn = new SqlConnection();
+            cn.ConnectionString = $"Server={_dbConConfig.Server};" +
+                $"Database={_dbConConfig.Database};" +
+                $"Integrated Security={_dbConConfig.Integrated_security}";
+            cn.Open();
+
+            SqlCommand cmd;            
+
+            foreach (Anagram ana in _wordRepository.GetWords())
+            {
+                cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "WordInsert";
+                cmd.Parameters.Add(new SqlParameter("@Word", ana.Word));
+                cmd.Parameters.Add(new SqlParameter("@Category", ana.Number));
+                cmd.ExecuteNonQuery();
+            }
+            
+            cn.Close();
         }
 
         async Task RequestToServer(string myWord)
