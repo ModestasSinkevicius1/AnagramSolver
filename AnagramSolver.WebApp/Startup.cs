@@ -22,9 +22,10 @@ namespace AnagramSolver.WebApp
         {
             services.AddSingleton<IWordRepository, DBWordRepository>();
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
-            services.AddSingleton<IWordService, WordService>();
+            services.AddSingleton<IWordService, DBWordService>();
             services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
             services.Configure<ContentConfig>(Configuration.GetSection(ContentConfig.Content));
+            services.Configure<DBConnectionConfig>(Configuration.GetSection(DBConnectionConfig.DBConnection));
 
             services.AddControllersWithViews();
         }

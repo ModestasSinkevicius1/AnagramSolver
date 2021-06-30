@@ -38,25 +38,20 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Dictionary(int pageNumber, int pageSize)
+        public IActionResult Dictionary(int pageNumber, int pageSize, string myWord)
         {
-            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize, null);
+            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize, myWord);
             return View();
         }
 
         public IActionResult FileAccess()
         {
             return View();
-        }
+        }    
 
-        public IActionResult SearchDictionary()
+        public IActionResult SearchWord(string searchWord)
         {
-            return View();
-        }
-
-        public IActionResult SearchWord()
-        {
-            return Redirect("SearchDictionary");
+            return RedirectToAction("Dictionary", new {myWord=searchWord});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -4,7 +4,13 @@
     var words = ViewData["Words"] as List<string>;  
 }
 
-<div class="container">       
+<div class="container">
+    <div>
+        @using (Html.BeginForm("SearchWord", null, FormMethod.Post))
+        {
+            <input type="search" value="Search" name="searchWord" class="badge-light rounded form-group" />
+        }
+    </div>
     <div>
         @foreach (var word in words)
         {
