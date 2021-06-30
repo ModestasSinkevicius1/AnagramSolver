@@ -13,7 +13,7 @@ namespace AnagramSolver.BusinessLogic
             _wordRepository = wordRepository;
         }
 
-        public List<string> GetWords(int pageNumber, int pageSize)
+        public List<string> GetWords(int pageNumber, int pageSize, string myWord)
         {
             if (pageNumber < 0)
                 pageNumber = 0;               

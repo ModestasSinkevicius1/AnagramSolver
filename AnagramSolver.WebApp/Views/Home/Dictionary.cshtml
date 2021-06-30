@@ -4,11 +4,11 @@
     var words = ViewData["Words"] as List<string>;  
 }
 
-<div class="container">
+<div class="container">       
     <div>
         @foreach (var word in words)
         {
-            <h1 class="page-link text-center">@Html.ActionLink(word, "Index", @"Home", new { myWords = word }, null)</h1>
+            <h1 class="page-link text-center rounded">@Html.ActionLink(word, "Index", @"Home", new { myWords = word }, null)</h1>
         }
     </div>
 </div>
