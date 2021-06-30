@@ -54,7 +54,7 @@ namespace AnagramSolver.BusinessLogic
             SqlCommand cmd = new();
             cmd.Connection = cn;
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = $"SELECT DISTINCT * FROM Word WHERE Word LIKE '%' + @myWord + '%'";
+            cmd.CommandText = $"SELECT * FROM Word WHERE Word LIKE '%' + @myWord + '%'";
 
             SqlParameter param = new SqlParameter("@myWord", myWord);
             cmd.Parameters.Add(param);

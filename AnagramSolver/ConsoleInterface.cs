@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Data;
+using System.Linq;
 
 namespace AnagramSolver.Cli
 {
@@ -35,7 +36,7 @@ namespace AnagramSolver.Cli
         public void OutputResult()
         {            
             try
-            {
+            {                
                 string commandWord = "";
 
                 while (commandWord != "exit")
@@ -90,7 +91,8 @@ namespace AnagramSolver.Cli
 
             SqlCommand cmd;            
 
-            foreach (WordModel ana in _wordRepository.GetWords())
+            foreach (WordModel ana in _wordRepository.GetWords().
+                GroupBy(o => o.Word).Select(group => group.First()))
             {
                 cmd = new();
                 cmd.Connection = cn;

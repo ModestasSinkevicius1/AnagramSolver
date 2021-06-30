@@ -37,7 +37,7 @@ namespace AnagramSolver.BusinessLogic
 
             words = _wordRepository.SearchWords(myWord).Select(o => o.Word)
             .Skip(pageSize * pageNumber)
-            .Take(pageSize).Distinct().ToList();
+            .Take(pageSize).ToList();
 
             return words;
 
