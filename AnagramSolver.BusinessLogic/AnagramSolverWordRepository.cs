@@ -2,28 +2,33 @@
 using AnagramSolver.Contracts;
 using System.IO;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using Microsoft.Extensions.Options;
 
 namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverWordRepository : IWordRepository
     {       
-        public IList<Anagram> GetWords()
+        public IList<WordModel> GetWords()
         {           
-            IList<Anagram> anagrams = new List<Anagram>();
+            IList<WordModel> anagrams = new List<WordModel>();
 
             using (StreamReader sr = File.OpenText("zodynas.txt"))
             {
-                string line;              
+                string line;
+
+                int row = 0;
 
                 while((line = sr.ReadLine()) != null)
                 {                      
                     string[] wordPart = line.Split("\t");
                         
-                    anagrams.Add(new Anagram(wordPart[0], wordPart[1], wordPart[2], Convert.ToInt32(wordPart[3])));
+                    anagrams.Add(new WordModel(row++, wordPart[0], Convert.ToInt32(wordPart[3])));
                 }                   
             }
 
             return anagrams;                        
-        }
+        }        
     }
 }

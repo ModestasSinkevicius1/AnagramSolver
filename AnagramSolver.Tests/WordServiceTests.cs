@@ -26,18 +26,18 @@ namespace AnagramSolver.Tests
         [TestCase(0, 5)]
         public void GetWords_CheckIfGivenPageNumberOrSizeGivesResult_ExpectedTrue(int pageNumber, int pageSize)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0),
-                new Anagram("salab", null, null, 0),
-                new Anagram("itsem", null, null, 0),
-                new Anagram("svetaine", null, null, 0),
-                new Anagram("krabas", null, null, 0),
-                new Anagram("stalas", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0),
+                new WordModel(5, "salab", 0),
+                new WordModel(6, "itsem", 0),
+                new WordModel(7, "svetaine", 0),
+                new WordModel(8, "krabas", 0),
+                new WordModel(9, "stalas", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
@@ -54,18 +54,18 @@ namespace AnagramSolver.Tests
         [TestCase(2, 3)]        
         public void GetWords_CheckIfGivenPageNumberOrSizeGivesExpectedWords_ExpectedTrue(int pageNumber, int pageSize)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0),
-                new Anagram("salab", null, null, 0),
-                new Anagram("itsem", null, null, 0),
-                new Anagram("svetaine", null, null, 0),
-                new Anagram("krabas", null, null, 0),
-                new Anagram("stalas", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0),
+                new WordModel(5, "salab", 0),
+                new WordModel(6, "itsem", 0),
+                new WordModel(7, "svetaine", 0),
+                new WordModel(8, "krabas", 0),
+                new WordModel(9, "stalas", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
@@ -91,18 +91,18 @@ namespace AnagramSolver.Tests
         [TestCase(100, 0)]
         public void GetWords_CheckIfGivenBadNumberForPageNumberOrSizeResetsValuesToDefault_ExpectedTrue(int pageNumber, int pageSize)
         {
-            List<Anagram> anagrams = new()
+            List<WordModel> anagrams = new()
             {
-                new Anagram("balas", null, null, 0),
-                new Anagram("dievas", null, null, 0),
-                new Anagram("semti", null, null, 0),
-                new Anagram("sabal", null, null, 0),
-                new Anagram("geimas", null, null, 0),
-                new Anagram("salab", null, null, 0),
-                new Anagram("itsem", null, null, 0),
-                new Anagram("svetaine", null, null, 0),
-                new Anagram("krabas", null, null, 0),
-                new Anagram("stalas", null, null, 0)
+                new WordModel(0, "balas", 0),
+                new WordModel(1, "dievas", 0),
+                new WordModel(2, "semti", 0),
+                new WordModel(3, "sabal", 0),
+                new WordModel(4, "geimas", 0),
+                new WordModel(5, "salab", 0),
+                new WordModel(6, "itsem", 0),
+                new WordModel(7, "svetaine", 0),
+                new WordModel(8, "krabas", 0),
+                new WordModel(9, "stalas", 0)
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);

@@ -41,7 +41,7 @@ namespace AnagramSolver.BusinessLogic
             HashSet<string> anagramWords = new();
             
             //Checking if given word matches set of characters                       
-            foreach (Anagram ana in _wordRepository.GetWords())
+            foreach (WordModel ana in _wordRepository.GetWords())
             {
                 if(anagramWords.Count >= _anagramConfig.TotalOutputAnagrams)
                 {
