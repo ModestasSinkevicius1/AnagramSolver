@@ -15,6 +15,8 @@ namespace AnagramSolver.BusinessLogic
 
         public List<string> GetWords(int pageNumber, int pageSize, string myWord)
         {
+            List<string> words = new();
+
             if (pageNumber < 0)
                 pageNumber = 0;               
 
@@ -24,11 +26,21 @@ namespace AnagramSolver.BusinessLogic
                 pageSize = 100;
             }
             
-            var words = _wordRepository.GetWords().Select(o => o.Word)
+            if(string.IsNullOrWhiteSpace(myWord) || myWord == "*")
+            {
+                words = _wordRepository.GetWords().Select(o => o.Word)
                 .Skip(pageSize * pageNumber)
-                .Take(pageSize);
+                .Take(pageSize).ToList();
 
-            return words.ToList();           
+                return words;
+            }
+
+            words = _wordRepository.SearchWords(myWord).Select(o => o.Word)
+            .Skip(pageSize * pageNumber)
+            .Take(pageSize).Distinct().ToList();
+
+            return words;
+
         }
     }
 }

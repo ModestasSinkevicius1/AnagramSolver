@@ -29,6 +29,11 @@ namespace AnagramSolver.BusinessLogic
             }
 
             return anagrams;                        
-        }        
+        }
+        
+        public IList<WordModel> SearchWords(string myWord)
+        {
+            return null;
+        }
     }
 }
