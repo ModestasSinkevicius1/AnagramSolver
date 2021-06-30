@@ -40,13 +40,23 @@ namespace AnagramSolver.WebApp.Controllers
 
         public IActionResult Dictionary(int pageNumber, int pageSize)
         {
-            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize);
+            ViewData["Words"] = _wordService.GetWords(pageNumber, pageSize, null);
             return View();
         }
 
         public IActionResult FileAccess()
         {
             return View();
+        }
+
+        public IActionResult SearchDictionary()
+        {
+            return View();
+        }
+
+        public IActionResult SearchWord()
+        {
+            return Redirect("SearchDictionary");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -34,6 +34,7 @@ namespace AnagramSolver.Cli
                 .ConfigureServices((context, services) =>
                     services.
                         AddSingleton<IWordRepository, AnagramSolverWordRepository>().
+                        AddSingleton<IWordRepository, DBWordRepository>().
                         AddSingleton<IAnagramSolver, AnagramSolverLogic>().
                         AddSingleton<ConsoleInterface>().
                         Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram)).

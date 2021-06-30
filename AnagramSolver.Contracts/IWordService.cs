@@ -4,6 +4,6 @@ namespace AnagramSolver.Contracts
 {
     public interface IWordService
     {
-        List<string> GetWords(int pageNumber, int pageSize);
+        List<string> GetWords(int pageNumber, int pageSize, string myWord);
     }
 }

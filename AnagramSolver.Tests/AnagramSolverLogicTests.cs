@@ -17,8 +17,8 @@ namespace AnagramSolver.Tests
 
         [SetUp]
         public void Setup()
-        {
-            mockWordRepository = new Mock<IWordRepository>(MockBehavior.Strict);
+        {    
+            mockWordRepository = new Mock<IWordRepository>(MockBehavior.Strict);           
             mockAnagramConfig = new Mock<IOptions<AnagramConfig>>(MockBehavior.Strict);
         }        
 

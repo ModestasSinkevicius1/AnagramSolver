@@ -12,9 +12,10 @@ namespace AnagramSolver.BusinessLogic
 
         private readonly AnagramConfig _anagramConfig;    
 
-        public AnagramSolverLogic(IWordRepository wordRepository, IOptions<AnagramConfig> anagramConfig)
+        public AnagramSolverLogic(IEnumerable<IWordRepository> wordRepository, 
+            IOptions<AnagramConfig> anagramConfig)
         {
-            _wordRepository = wordRepository;
+            _wordRepository = wordRepository.SingleOrDefault(p => p.Key == "Anagram");
 
             _anagramConfig = anagramConfig.Value;
         }

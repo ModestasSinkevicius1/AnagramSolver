@@ -44,7 +44,7 @@ namespace AnagramSolver.Tests
 
             wordService = new WordService(mockWordRepository.Object);
 
-            int actual = wordService.GetWords(pageNumber, pageSize).Count;
+            int actual = wordService.GetWords(pageNumber, pageSize, null).Count;
             int expected = pageSize;
 
             Assert.That(actual, Is.EqualTo(expected));
@@ -72,7 +72,7 @@ namespace AnagramSolver.Tests
 
             wordService = new WordService(mockWordRepository.Object);
 
-            List<string> actual = wordService.GetWords(pageNumber, pageSize);
+            List<string> actual = wordService.GetWords(pageNumber, pageSize, null);
             List<string> expected = new()
             {
                 "itsem",
@@ -109,7 +109,7 @@ namespace AnagramSolver.Tests
 
             wordService = new WordService(mockWordRepository.Object);
 
-            int actual = wordService.GetWords(pageNumber, pageSize).Count;
+            int actual = wordService.GetWords(pageNumber, pageSize, null).Count;
             int expected = 10;
 
             Assert.That(actual, Is.EqualTo(expected));

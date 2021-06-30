@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Data;
+using System.Linq;
 
 namespace AnagramSolver.Cli
 {
@@ -24,12 +25,12 @@ namespace AnagramSolver.Cli
         private readonly IWordRepository _wordRepository;
 
         public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig,
-            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository)
+            IOptions<DBConnectionConfig> dbConConfig, IEnumerable<IWordRepository> wordRepository)
         {
             _anagramSolver = anagramSolver;
             _uriConfig = uriConfig.Value;
             _dbConConfig = dbConConfig.Value;
-            _wordRepository = wordRepository;
+            _wordRepository = wordRepository.SingleOrDefault(p => p.Key == "Anagram");
         }
 
         public void OutputResult()

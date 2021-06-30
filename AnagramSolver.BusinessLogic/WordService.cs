@@ -8,12 +8,12 @@ namespace AnagramSolver.BusinessLogic
     {
         private readonly IWordRepository _wordRepository;
 
-        public WordService(IWordRepository wordRepository)
+        public WordService(IEnumerable<IWordRepository> wordRepository)
         {
-            _wordRepository = wordRepository;
+            _wordRepository = wordRepository.SingleOrDefault(p => p.Key == "Anagram");
         }
 
-        public List<string> GetWords(int pageNumber, int pageSize)
+        public List<string> GetWords(int pageNumber, int pageSize, string myWord)
         {
             if (pageNumber < 0)
                 pageNumber = 0;               
