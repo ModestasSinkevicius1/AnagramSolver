@@ -4,7 +4,6 @@ namespace AnagramSolver.Contracts
 {
     public interface IWordRepository
     {
-        IList<WordModel> GetWords();
-        string Key { get; }
+        IList<WordModel> GetWords();      
     }
 }

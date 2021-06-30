@@ -9,9 +9,7 @@ using Microsoft.Extensions.Options;
 namespace AnagramSolver.BusinessLogic
 {
     public class AnagramSolverWordRepository : IWordRepository
-    {
-        public string Key { get; } = "Anagram";
-
+    {       
         public IList<WordModel> GetWords()
         {           
             IList<WordModel> anagrams = new List<WordModel>();

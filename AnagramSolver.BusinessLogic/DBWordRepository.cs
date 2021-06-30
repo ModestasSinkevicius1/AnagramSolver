@@ -14,9 +14,6 @@ namespace AnagramSolver.BusinessLogic
         {
             _dbConConf = dbConConf.Value;
         }
-
-        public string Key { get; } = "DB";        
-
         public IList<WordModel> GetWords()
         {
             IList<WordModel> words = new List<WordModel>();
@@ -44,11 +41,6 @@ namespace AnagramSolver.BusinessLogic
             cn.Close();
 
             return words;
-        }
-
-        public void Test()
-        {
-
         }
     }
 }
