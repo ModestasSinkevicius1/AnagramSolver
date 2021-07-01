@@ -18,5 +18,9 @@ namespace AnagramSolver.Contracts
             Word = word;
             Category = category;
         }
+        public override string ToString()
+        {
+            return $"Result: {Word}";
+        }
     }
 }

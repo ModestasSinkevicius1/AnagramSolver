@@ -45,12 +45,13 @@ namespace AnagramSolver.Tests
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+            mockWordRepository.Setup(p => p.CheckCachedWord(value)).Returns(false);
             mockAnagramConfig.Setup(p => p.Value).Returns(
                 new AnagramConfig() { MinWordLength = 12, TotalOutputAnagrams = 3 });
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
                         
-            IList<string> anagram = anagramSolverLogic.GetAnagrams(value);
+            IList<WordModel> anagram = anagramSolverLogic.GetAnagrams(value);
 
             int actual = anagram.Count;
 
@@ -79,6 +80,7 @@ namespace AnagramSolver.Tests
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+            mockWordRepository.Setup(p => p.CheckCachedWord(value)).Returns(false);
             mockAnagramConfig.Setup(p => p.Value).Returns(
                 new AnagramConfig() { MinWordLength = length, TotalOutputAnagrams = 3 });
 
@@ -116,12 +118,13 @@ namespace AnagramSolver.Tests
             };
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+            mockWordRepository.Setup(p => p.CheckCachedWord(value)).Returns(false);
             mockAnagramConfig.Setup(p => p.Value).Returns(
                 new AnagramConfig() { MinWordLength = 12, TotalOutputAnagrams = total });
 
             anagramSolverLogic = new AnagramSolverLogic(mockWordRepository.Object, mockAnagramConfig.Object);
 
-            IList<string> anagram = anagramSolverLogic.GetAnagrams(value);
+            IList<WordModel> anagram = anagramSolverLogic.GetAnagrams(value);
 
             int expected = mockAnagramConfig.Object.Value.TotalOutputAnagrams;
             int actual = anagram.Count;
@@ -136,6 +139,7 @@ namespace AnagramSolver.Tests
             List<WordModel> anagrams = new();            
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
+            mockWordRepository.Setup(p => p.CheckCachedWord(value)).Returns(false);
             mockAnagramConfig.Setup(p => p.Value).Returns(
                 new AnagramConfig() { MinWordLength = 6, TotalOutputAnagrams = 3 });
 

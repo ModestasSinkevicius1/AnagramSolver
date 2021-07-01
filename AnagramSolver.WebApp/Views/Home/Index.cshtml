@@ -2,7 +2,7 @@
     ViewData["Title"] = "Anagram Solver";
 }
 @{
-    var anagrams = ViewData["Anagrams"] as List<string>;
+    var anagrams = ViewData["Anagrams"] as List<WordModel>;
 }
 
 @using (Html.BeginForm("index", null, FormMethod.Post))
@@ -14,6 +14,6 @@
 @foreach (var anagram in anagrams)
 {
     <div>
-        <h3>@anagram</h3>
+        <h3>@anagram.ToString()</h3>
     </div>
 }

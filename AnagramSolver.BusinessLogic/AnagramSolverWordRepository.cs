@@ -34,6 +34,25 @@ namespace AnagramSolver.BusinessLogic
         public IList<WordModel> SearchWords(string myWord)
         {
             return null;
+        }        
+
+        public void InsertCachedWord(IList<WordModel> words, string myWord)
+        {
+            
+        }
+        public bool CheckCachedWord(string myWord)
+        {
+            return false;
+        }
+
+        public IList<WordModel> GetWordFromCache(string myWord)
+        {
+            return null;
+        }
+
+        public void DeleteRecordFromWordTable(string myWord)
+        {
+            
         }
     }
 }

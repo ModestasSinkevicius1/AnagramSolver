@@ -42,7 +42,7 @@ namespace AnagramSolver.Tests
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
 
-            wordService = new WordService(mockWordRepository.Object);
+            wordService = new WordService(mockWordRepository.Object, null);
 
             int actual = wordService.GetWords(pageNumber, pageSize, null).Count;
             int expected = pageSize;
@@ -70,7 +70,7 @@ namespace AnagramSolver.Tests
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
 
-            wordService = new WordService(mockWordRepository.Object);
+            wordService = new WordService(mockWordRepository.Object, null);
 
             List<string> actual = wordService.GetWords(pageNumber, pageSize, null);
             List<string> expected = new()
@@ -107,7 +107,7 @@ namespace AnagramSolver.Tests
 
             mockWordRepository.Setup(p => p.GetWords()).Returns(anagrams);
 
-            wordService = new WordService(mockWordRepository.Object);
+            wordService = new WordService(mockWordRepository.Object, null);
 
             int actual = wordService.GetWords(pageNumber, pageSize, null).Count;
             int expected = 10;

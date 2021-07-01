@@ -7,10 +7,12 @@ namespace AnagramSolver.BusinessLogic
     public class WordService : IWordService
     {
         private readonly IWordRepository _wordRepository;
+        private readonly IAnagramSolver _anagramSolver;
 
-        public WordService(IWordRepository wordRepository)
+        public WordService(IWordRepository wordRepository, IAnagramSolver anagramSolver)
         {
             _wordRepository = wordRepository;
+            _anagramSolver = anagramSolver;
         }
 
         public List<string> GetWords(int pageNumber, int pageSize, string myWord)
@@ -24,9 +26,9 @@ namespace AnagramSolver.BusinessLogic
             {
                 pageNumber = 0;
                 pageSize = 100;
-            }
-            
-            if(string.IsNullOrWhiteSpace(myWord) || myWord == "*")
+            }      
+
+            if (string.IsNullOrWhiteSpace(myWord) || myWord == "*")
             {
                 words = _wordRepository.GetWords().Select(o => o.Word)
                 .Skip(pageSize * pageNumber)
@@ -34,13 +36,30 @@ namespace AnagramSolver.BusinessLogic
 
                 return words;
             }
+        
+            List<WordModel> wordModels = _wordRepository.SearchWords(myWord).ToList();
 
-            words = _wordRepository.SearchWords(myWord).Select(o => o.Word)
+            words = wordModels.Select(o => o.Word)
             .Skip(pageSize * pageNumber)
-            .Take(pageSize).ToList();
+            .Take(pageSize).ToList();                           
+            
+            return words;
+        }
+
+        public List<WordModel> GetAnagramsByQuery(string myWord)
+        {
+            List<WordModel> words;
+
+            if (_wordRepository.CheckCachedWord(myWord))
+            {
+                words = _wordRepository.GetWordFromCache(myWord).ToList();                
+                return words;
+            }
+
+            words = _anagramSolver.GetAnagrams(myWord).ToList();
+            _wordRepository.InsertCachedWord(words, myWord);        
 
             return words;
-
         }
     }
 }

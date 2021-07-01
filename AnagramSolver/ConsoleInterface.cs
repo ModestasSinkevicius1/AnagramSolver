@@ -24,13 +24,17 @@ namespace AnagramSolver.Cli
 
         private readonly IWordRepository _wordRepository;
 
+        private readonly IWordService _wordService;
+
         public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig,
-            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository)
+            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository,
+            IWordService wordService)
         {
             _anagramSolver = anagramSolver;
             _uriConfig = uriConfig.Value;
             _dbConConfig = dbConConfig.Value;
             _wordRepository = wordRepository;
+            _wordService = wordService;
         }
 
         public void OutputResult()
@@ -45,13 +49,13 @@ namespace AnagramSolver.Cli
 
                     commandWord = GetMyInput();
 
-                    if (commandWord != "exit" && commandWord != "http")
+                    if (commandWord != "exit" && commandWord != "http" && commandWord != "delete")
                     {
                         Console.WriteLine("Getting anagrams...");
 
-                        foreach (string ana in _anagramSolver.GetAnagrams(commandWord))
+                        foreach (WordModel ana in _wordService.GetAnagramsByQuery(commandWord))
                         {
-                            Console.WriteLine(ana);
+                            Console.WriteLine(ana.ToString());
                         }
                         
                         OutputMessage("Press enter to continue");
@@ -62,6 +66,15 @@ namespace AnagramSolver.Cli
                         commandWord = Console.ReadLine();
                         
                         RequestToServer(commandWord).Wait();             
+
+                        OutputMessage("Press enter to continue");
+                    }
+                    if(commandWord == "delete")
+                    {
+                        Console.WriteLine("Type word that will be deleted");
+                        commandWord = Console.ReadLine();
+
+                        _wordRepository.DeleteRecordFromWordTable(commandWord);
 
                         OutputMessage("Press enter to continue");
                     }
@@ -81,7 +94,7 @@ namespace AnagramSolver.Cli
             {
                 OutputMessage(exc.Message);                                                                        
             }         
-        }
+        }       
 
         void StoreDataToDB()
         {
