@@ -22,7 +22,7 @@ namespace AnagramSolver.WebApp.Controllers
             if (string.IsNullOrWhiteSpace(myWord))
                 return BadRequest();
 
-            List<string> response = _anagramSolverLogic.GetAnagrams(myWord).ToList();
+            List<WordModel> response = _anagramSolverLogic.GetAnagrams(myWord).ToList();
 
             return Ok(response);
         }

@@ -24,13 +24,17 @@ namespace AnagramSolver.Cli
 
         private readonly IWordRepository _wordRepository;
 
+        private readonly IWordService _wordService;
+
         public ConsoleInterface(IAnagramSolver anagramSolver, IOptions<URIConfig> uriConfig,
-            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository)
+            IOptions<DBConnectionConfig> dbConConfig, IWordRepository wordRepository,
+            IWordService wordService)
         {
             _anagramSolver = anagramSolver;
             _uriConfig = uriConfig.Value;
             _dbConConfig = dbConConfig.Value;
             _wordRepository = wordRepository;
+            _wordService = wordService;
         }
 
         public void OutputResult()
@@ -49,7 +53,7 @@ namespace AnagramSolver.Cli
                     {
                         Console.WriteLine("Getting anagrams...");
 
-                        foreach (string ana in _anagramSolver.GetAnagrams(commandWord))
+                        foreach (string ana in _wordService.GetAnagramsByQuery(commandWord))
                         {
                             Console.WriteLine(ana);
                         }

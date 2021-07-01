@@ -37,29 +37,29 @@ namespace AnagramSolver.BusinessLogic
                 return words;
             }
         
-            List<WordModel> wordObject = _wordRepository.SearchWords(myWord).ToList();
+            List<WordModel> wordModels = _wordRepository.SearchWords(myWord).ToList();
 
-            words = wordObject.Select(o => o.Word)
+            words = wordModels.Select(o => o.Word)
             .Skip(pageSize * pageNumber)
             .Take(pageSize).ToList();                           
             
             return words;
         }
 
-        public List<string> GetAnagramsByDetermine(string myWord)
+        public List<string> GetAnagramsByQuery(string myWord)
         {
-            List<string> words;
+            List<WordModel> words;
 
             if (_wordRepository.CheckCachedWord(myWord))
             {
                 words = _wordRepository.GetWordFromCache(myWord).ToList();
-                return words;
+                return words.Select(o => o.Word).ToList();
             }
 
             words = _anagramSolver.GetAnagrams(myWord).ToList();
             _wordRepository.InsertCachedWord(words, myWord);
 
-            return words;
+            return words.Select(o => o.Word).ToList();
         }
     }
 }

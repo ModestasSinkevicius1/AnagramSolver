@@ -6,6 +6,6 @@ namespace AnagramSolver.Contracts
     {
         List<string> GetWords(int pageNumber, int pageSize, string myWord);
 
-        List<string> GetAnagramsByDetermine(string myWords);
+        List<string> GetAnagramsByQuery(string myWords);
     }
 }

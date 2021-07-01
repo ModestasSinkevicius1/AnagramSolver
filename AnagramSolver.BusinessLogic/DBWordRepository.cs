@@ -16,162 +16,189 @@ namespace AnagramSolver.BusinessLogic
         public DBWordRepository(IOptions<DBConnectionConfig> dbConConf)
         {
             _dbConConf = dbConConf.Value;
+
+            cn.ConnectionString = _dbConConf.ConnectionString;
         }
         public IList<WordModel> GetWords()
         {
             IList<WordModel> words = new List<WordModel>();
 
-            OpenConnection();         
-
-            SqlCommand cmd = new();
-            cmd.Connection = cn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Word";
-            SqlDataReader dr = cmd.ExecuteReader();
-            if (dr.HasRows)
+            try
             {
-                while (dr.Read())
+                OpenConnection();
+
+                SqlCommand cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM Word";
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
                 {
-                    words.Add(new WordModel(Convert.ToInt32(dr["Id"]),
-                        Convert.ToString(dr["Word"]),
-                        Convert.ToInt32(dr["Category"])));
+                    while (dr.Read())
+                    {
+                        words.Add(new WordModel(Convert.ToInt32(dr["Id"]),
+                            Convert.ToString(dr["Word"]),
+                            Convert.ToInt32(dr["Category"])));
+                    }
                 }
+                dr.Close();
+                
+                return words;
             }
-            dr.Close();
-
-            CloseConnection();
-
-            return words;
+            finally
+            {
+                CloseConnection();
+            }
         }
 
         public IList<WordModel> SearchWords(string myWord)
         {
             List<WordModel> words = new List<WordModel>();
-
-            OpenConnection();
-
-            SqlCommand cmd = new();
-            cmd.Connection = cn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = $"SELECT * FROM Word WHERE Word LIKE '%' + @myWord + '%'";
-
-            SqlParameter param = new SqlParameter("@myWord", myWord);
-            cmd.Parameters.Add(param);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            if (dr.HasRows)
+            try
             {
-                while (dr.Read())
+                OpenConnection();
+
+                SqlCommand cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"SELECT * FROM Word WHERE Word LIKE '%' + @myWord + '%'";
+
+                SqlParameter param = new SqlParameter("@myWord", myWord);
+                cmd.Parameters.Add(param);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
                 {
-                    words.Add(new WordModel(Convert.ToInt32(dr["Id"]),
-                        Convert.ToString(dr["Word"]),
-                        Convert.ToInt32(dr["Category"])));
+                    while (dr.Read())
+                    {
+                        words.Add(new WordModel(Convert.ToInt32(dr["Id"]),
+                            Convert.ToString(dr["Word"]),
+                            Convert.ToInt32(dr["Category"])));
+                    }
                 }
+                dr.Close();                
+
+                return words;
             }
-            dr.Close();
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        
+        public void InsertCachedWord(List<WordModel> words, string myWord)
+        {
+            try
+            {
+                OpenConnection();
 
-            CloseConnection();
+                SqlCommand cmd;
 
-            return words;
+                foreach (WordModel ana in words)
+                {
+                    cmd = new();
+                    cmd.Connection = cn;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = $"INSERT INTO CachedWord (SearchingWord, AnagramId) " +
+                        $"VALUES " +
+                            $"(@myWord, @AnagramId)";
+
+                    SqlParameter paramWord = new SqlParameter("@myWord", myWord);
+                    SqlParameter paramAnagram = new SqlParameter("@AnagramId", ana.Id);
+                    cmd.Parameters.Add(paramWord);
+                    cmd.Parameters.Add(paramAnagram);
+                    cmd.ExecuteNonQuery();
+                }                
+            }
+            finally
+            {
+                CloseConnection();
+            }          
         }
 
-        private void OpenConnection()
+        public bool CheckCachedWord(string myWord)
         {
-            cn.ConnectionString = _dbConConf.ConnectionString;
+            try
+            {
+
+                OpenConnection();
+
+                SqlCommand cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"SELECT COUNT(SearchingWord) AS CountCachedWord FROM CachedWord WHERE SearchingWord = @myWord";
+
+                SqlParameter param = new SqlParameter("@myWord", myWord);
+                cmd.Parameters.Add(param);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                bool isWordExist = false;
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        isWordExist = Convert.ToInt32(dr["CountCachedWord"]) > 0 ? true : false;
+                    }
+                }
+                dr.Close();               
+
+                return isWordExist;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
+        public IList<WordModel> GetWordFromCache(string myWord)
+        {
+            List<WordModel> anagrams = new();
+
+            try
+            {
+                OpenConnection();
+
+                SqlCommand cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"SELECT * FROM Word " +
+                    $"INNNER JOIN CachedWord " +
+                        $"ON Id = AnagramId AND SearchingWord = @myWord";
+
+                SqlParameter param = new SqlParameter("@myWord", myWord);
+                cmd.Parameters.Add(param);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        anagrams.Add(new WordModel(Convert.ToInt32(dr["Id"]), 
+                            Convert.ToString(dr["Word"]), 
+                            Convert.ToInt32(dr["Category"])));
+                    }
+                }
+                dr.Close();              
+
+                return anagrams;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        private void OpenConnection()
+        {            
             cn.Open();
         }
 
         private void CloseConnection()
         {
             cn.Close();
-        }
-
-        public void InsertCachedWord(List<string> words, string myWord)
-        {
-            OpenConnection();
-
-            SqlCommand cmd;
-
-            foreach (string ana in words)
-            {
-                cmd = new();
-                cmd.Connection = cn;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = $"INSERT INTO CachedWord (SearchingWord, AnagramId) " +
-                    $"SELECT " +
-                        $"@myWord, Id from Word where Word = @Anagram";
-
-                SqlParameter paramWord = new SqlParameter("@myWord", myWord);
-                SqlParameter paramAnagram = new SqlParameter("@Anagram", ana);
-                cmd.Parameters.Add(paramWord);
-                cmd.Parameters.Add(paramAnagram);
-                cmd.ExecuteNonQuery();
-            }
-
-            CloseConnection();
-        }
-
-        public bool CheckCachedWord(string myWord)
-        {
-            OpenConnection();
-
-            SqlCommand cmd = new();
-            cmd.Connection = cn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = $"SELECT COUNT(SearchingWord) AS CountCachedWord FROM CachedWord WHERE SearchingWord = @myWord";
-
-            SqlParameter param = new SqlParameter("@myWord", myWord);
-            cmd.Parameters.Add(param);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            bool isWordExist = false;           
-
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    isWordExist = Convert.ToInt32(dr["CountCachedWord"]) > 0 ? true : false;                    
-                }
-            }
-            dr.Close();
-
-            CloseConnection();
-
-            return isWordExist;
-        }
-
-        public IList<string> GetWordFromCache(string myWord)
-        {
-            List<string> anagrams = new();
-
-            OpenConnection();
-
-            SqlCommand cmd = new();
-            cmd.Connection = cn;
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = $"SELECT Word FROM Word " +
-                $"INNNER JOIN CachedWord " +
-                    $"ON Id = AnagramId AND SearchingWord = @myWord";
-
-            SqlParameter param = new SqlParameter("@myWord", myWord);
-            cmd.Parameters.Add(param);
-
-            SqlDataReader dr = cmd.ExecuteReader();
-
-            if (dr.HasRows)
-            {
-                while (dr.Read())
-                {
-                    anagrams.Add(Convert.ToString(dr["Word"]));
-                }
-            }
-            dr.Close();
-
-            CloseConnection();
-
-            return anagrams;
         }
     }
 }
