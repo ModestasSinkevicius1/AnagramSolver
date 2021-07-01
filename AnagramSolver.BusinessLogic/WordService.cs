@@ -7,10 +7,12 @@ namespace AnagramSolver.BusinessLogic
     public class WordService : IWordService
     {
         private readonly IWordRepository _wordRepository;
+        private readonly IAnagramSolver _anagramSolver;
 
-        public WordService(IWordRepository wordRepository)
+        public WordService(IWordRepository wordRepository, IAnagramSolver anagramSolver)
         {
             _wordRepository = wordRepository;
+            _anagramSolver = anagramSolver;
         }
 
         public List<string> GetWords(int pageNumber, int pageSize, string myWord)
@@ -34,20 +36,30 @@ namespace AnagramSolver.BusinessLogic
 
                 return words;
             }
+        
+            List<WordModel> wordObject = _wordRepository.SearchWords(myWord).ToList();
 
-            if (!_wordRepository.CheckCachedWord(myWord))
-            {
-                List<WordModel> wordObject = _wordRepository.SearchWords(myWord).ToList();
-
-                words = wordObject.Select(o => o.Word)
-                .Skip(pageSize * pageNumber)
-                .Take(pageSize).ToList();
-
-                //_wordRepository.InsertCachedWord(myWord);
-            }
+            words = wordObject.Select(o => o.Word)
+            .Skip(pageSize * pageNumber)
+            .Take(pageSize).ToList();                           
             
             return words;
+        }
 
+        public List<string> GetAnagramsByDetermine(string myWord)
+        {
+            List<string> words;
+
+            if (_wordRepository.CheckCachedWord(myWord))
+            {
+                words = _wordRepository.GetWordFromCache(myWord).ToList();
+                return words;
+            }
+
+            words = _anagramSolver.GetAnagrams(myWord).ToList();
+            _wordRepository.InsertCachedWord(words, myWord);
+
+            return words;
         }
     }
 }

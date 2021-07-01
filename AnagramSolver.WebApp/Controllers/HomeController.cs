@@ -28,7 +28,7 @@ namespace AnagramSolver.WebApp.Controllers
             if (string.IsNullOrWhiteSpace(myWords))
                 return new EmptyResult();
 
-            ViewData["Anagrams"] = _anagramSolverLogic.GetAnagrams(myWords).ToList();           
+            ViewData["Anagrams"] = _wordService.GetAnagramsByDetermine(myWords).ToList();
 
             return View();
         }

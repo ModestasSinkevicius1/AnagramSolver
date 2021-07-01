@@ -87,9 +87,29 @@ namespace AnagramSolver.BusinessLogic
             cn.Close();
         }
 
-        public void InsertCachedWord(List<WordModel> words, string myWord)
+        public void InsertCachedWord(List<string> words, string myWord)
         {
-            
+            OpenConnection();
+
+            SqlCommand cmd;
+
+            foreach (string ana in words)
+            {
+                cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"INSERT INTO CachedWord (SearchingWord, AnagramId) " +
+                    $"SELECT " +
+                        $"@myWord, Id from Word where Word = @Anagram";
+
+                SqlParameter paramWord = new SqlParameter("@myWord", myWord);
+                SqlParameter paramAnagram = new SqlParameter("@Anagram", ana);
+                cmd.Parameters.Add(paramWord);
+                cmd.Parameters.Add(paramAnagram);
+                cmd.ExecuteNonQuery();
+            }
+
+            CloseConnection();
         }
 
         public bool CheckCachedWord(string myWord)
@@ -124,7 +144,34 @@ namespace AnagramSolver.BusinessLogic
 
         public IList<string> GetWordFromCache(string myWord)
         {
-            return null;
+            List<string> anagrams = new();
+
+            OpenConnection();
+
+            SqlCommand cmd = new();
+            cmd.Connection = cn;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT Word FROM Word " +
+                $"INNNER JOIN CachedWord " +
+                    $"ON Id = AnagramId AND SearchingWord = @myWord";
+
+            SqlParameter param = new SqlParameter("@myWord", myWord);
+            cmd.Parameters.Add(param);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    anagrams.Add(Convert.ToString(dr["Word"]));
+                }
+            }
+            dr.Close();
+
+            CloseConnection();
+
+            return anagrams;
         }
     }
 }
