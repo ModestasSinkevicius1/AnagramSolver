@@ -49,7 +49,7 @@ namespace AnagramSolver.Cli
 
                     commandWord = GetMyInput();
 
-                    if (commandWord != "exit" && commandWord != "http")
+                    if (commandWord != "exit" && commandWord != "http" && commandWord != "delete")
                     {
                         Console.WriteLine("Getting anagrams...");
 
@@ -69,6 +69,15 @@ namespace AnagramSolver.Cli
 
                         OutputMessage("Press enter to continue");
                     }
+                    if(commandWord == "delete")
+                    {
+                        Console.WriteLine("Type word that will be deleted");
+                        commandWord = Console.ReadLine();
+
+                        _wordRepository.DeleteRecordFromWordTable(commandWord);
+
+                        OutputMessage("Press enter to continue");
+                    }
                 }
             }
             catch (WordIsEmptyException exc)
@@ -85,7 +94,7 @@ namespace AnagramSolver.Cli
             {
                 OutputMessage(exc.Message);                                                                        
             }         
-        }
+        }       
 
         void StoreDataToDB()
         {

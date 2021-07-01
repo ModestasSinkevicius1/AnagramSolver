@@ -57,7 +57,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 if (IsLetterNotMoreThanGiven(myWords, ana.Word))
                 {
-                    anagramWords.Add(new WordModel(ana.Id, ana.Word, ana.Category));
+                    anagramWords.Add(ana);
                 }
             }          
 

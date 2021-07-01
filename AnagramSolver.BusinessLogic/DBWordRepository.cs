@@ -87,7 +87,7 @@ namespace AnagramSolver.BusinessLogic
             }
         }
         
-        public void InsertCachedWord(List<WordModel> words, string myWord)
+        public void InsertCachedWord(IList<WordModel> words, string myWord)
         {
             try
             {
@@ -191,6 +191,28 @@ namespace AnagramSolver.BusinessLogic
                 CloseConnection();
             }
         }
+
+        public void DeleteRecordFromWordTable(string myWord)
+        {
+            try
+            {
+                OpenConnection();           
+
+                SqlCommand cmd;
+                
+                cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteRecordFromWord";
+                cmd.Parameters.Add(new SqlParameter("@target", myWord));                
+                cmd.ExecuteNonQuery();                
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
         private void OpenConnection()
         {            
             cn.Open();
