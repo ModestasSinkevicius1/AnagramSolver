@@ -53,9 +53,9 @@ namespace AnagramSolver.Cli
                     {
                         Console.WriteLine("Getting anagrams...");
 
-                        foreach (string ana in _wordService.GetAnagramsByQuery(commandWord))
+                        foreach (WordModel ana in _wordService.GetAnagramsByQuery(commandWord))
                         {
-                            Console.WriteLine(ana);
+                            Console.WriteLine(ana.ToString());
                         }
                         
                         OutputMessage("Press enter to continue");

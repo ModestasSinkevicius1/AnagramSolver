@@ -20,7 +20,7 @@ namespace AnagramSolver.Contracts
         }
         public override string ToString()
         {
-            return $"Result: {Id} {Word} {Category}";
+            return $"Result: {Word}";
         }
     }
 }

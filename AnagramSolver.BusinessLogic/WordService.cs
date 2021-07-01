@@ -46,20 +46,20 @@ namespace AnagramSolver.BusinessLogic
             return words;
         }
 
-        public List<string> GetAnagramsByQuery(string myWord)
+        public List<WordModel> GetAnagramsByQuery(string myWord)
         {
             List<WordModel> words;
 
             if (_wordRepository.CheckCachedWord(myWord))
             {
-                words = _wordRepository.GetWordFromCache(myWord).ToList();
-                return words.Select(o => o.Word).ToList();
+                words = _wordRepository.GetWordFromCache(myWord).ToList();                
+                return words;
             }
 
             words = _anagramSolver.GetAnagrams(myWord).ToList();
-            _wordRepository.InsertCachedWord(words, myWord);
+            _wordRepository.InsertCachedWord(words, myWord);        
 
-            return words.Select(o => o.Word).ToList();
+            return words;
         }
     }
 }
