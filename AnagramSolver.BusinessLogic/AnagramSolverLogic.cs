@@ -17,28 +17,35 @@ namespace AnagramSolver.BusinessLogic
             _wordRepository = wordRepository;
 
             _anagramConfig = anagramConfig.Value;
-        }
+        }       
 
         public IList<string> GetAnagrams(string myWords)
-        {           
+        {            
             if (string.IsNullOrWhiteSpace(myWords))
                 throw new WordIsEmptyException("Error: word was empty");
 
             if (_anagramConfig.MinWordLength < myWords.Length)
-                throw new WordTooLongException("Error: input word too long");     
+                throw new WordTooLongException("Error: input word too long");
+
+            if (_wordRepository.CheckCachedWord(myWords))
+            {
+                //do this
+            }
 
             string wordPattern = $"^[{ myWords }]{{{ myWords.Length }}}$";
 
             Regex filterWord = new(wordPattern);
 
-            List<string> anagramWords = GetAnagramWords(filterWord, myWords);
+            List<WordModel> anagramWords = GetAnagramWords(filterWord, myWords);
 
-            return anagramWords;
+            _wordRepository.InsertCachedWord(anagramWords, myWords);
+
+            return anagramWords.Select(o => o.Word).ToList();
         }
 
-        private List<string> GetAnagramWords(Regex filterWord, string myWords)
+        private List<WordModel> GetAnagramWords(Regex filterWord, string myWords)
         {
-            HashSet<string> anagramWords = new();
+            HashSet<WordModel> anagramWords = new();
             
             //Checking if given word matches set of characters                       
             foreach (WordModel ana in _wordRepository.GetWords())
@@ -57,7 +64,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 if (IsLetterNotMoreThanGiven(myWords, ana.Word))
                 {
-                    anagramWords.Add(ana.Word);
+                    anagramWords.Add(new WordModel(ana.Id, ana.Word, ana.Category));              
                 }
             }          
 

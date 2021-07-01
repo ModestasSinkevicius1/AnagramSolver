@@ -10,6 +10,9 @@ namespace AnagramSolver.BusinessLogic
     public class DBWordRepository : IWordRepository
     {
         private DBConnectionConfig _dbConConf;
+
+        private SqlConnection cn = new();
+
         public DBWordRepository(IOptions<DBConnectionConfig> dbConConf)
         {
             _dbConConf = dbConConf.Value;
@@ -18,9 +21,7 @@ namespace AnagramSolver.BusinessLogic
         {
             IList<WordModel> words = new List<WordModel>();
 
-            SqlConnection cn = new();
-            cn.ConnectionString = _dbConConf.ConnectionString;
-            cn.Open();
+            OpenConnection();         
 
             SqlCommand cmd = new();
             cmd.Connection = cn;
@@ -38,18 +39,16 @@ namespace AnagramSolver.BusinessLogic
             }
             dr.Close();
 
-            cn.Close();
+            CloseConnection();
 
             return words;
         }
 
         public IList<WordModel> SearchWords(string myWord)
         {
-            List<WordModel> words = new List<WordModel>();           
+            List<WordModel> words = new List<WordModel>();
 
-            SqlConnection cn = new();
-            cn.ConnectionString = _dbConConf.ConnectionString;
-            cn.Open();
+            OpenConnection();
 
             SqlCommand cmd = new();
             cmd.Connection = cn;
@@ -72,9 +71,60 @@ namespace AnagramSolver.BusinessLogic
             }
             dr.Close();
 
-            cn.Close();
+            CloseConnection();
 
             return words;
+        }
+
+        private void OpenConnection()
+        {
+            cn.ConnectionString = _dbConConf.ConnectionString;
+            cn.Open();
+        }
+
+        private void CloseConnection()
+        {
+            cn.Close();
+        }
+
+        public void InsertCachedWord(List<WordModel> words, string myWord)
+        {
+            
+        }
+
+        public bool CheckCachedWord(string myWord)
+        {
+            OpenConnection();
+
+            SqlCommand cmd = new();
+            cmd.Connection = cn;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT COUNT(SearchingWord) AS CountCachedWord FROM CachedWord WHERE SearchingWord = @myWord";
+
+            SqlParameter param = new SqlParameter("@myWord", myWord);
+            cmd.Parameters.Add(param);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            bool isWordExist = false;           
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    isWordExist = Convert.ToInt32(dr["CountCachedWord"]) > 0 ? true : false;                    
+                }
+            }
+            dr.Close();
+
+            CloseConnection();
+
+            return isWordExist;
+        }
+
+        public IList<string> GetWordFromCache(string myWord)
+        {
+            return null;
         }
     }
 }

@@ -24,9 +24,9 @@ namespace AnagramSolver.BusinessLogic
             {
                 pageNumber = 0;
                 pageSize = 100;
-            }
-            
-            if(string.IsNullOrWhiteSpace(myWord) || myWord == "*")
+            }      
+
+            if (string.IsNullOrWhiteSpace(myWord) || myWord == "*")
             {
                 words = _wordRepository.GetWords().Select(o => o.Word)
                 .Skip(pageSize * pageNumber)
@@ -35,10 +35,17 @@ namespace AnagramSolver.BusinessLogic
                 return words;
             }
 
-            words = _wordRepository.SearchWords(myWord).Select(o => o.Word)
-            .Skip(pageSize * pageNumber)
-            .Take(pageSize).ToList();
+            if (!_wordRepository.CheckCachedWord(myWord))
+            {
+                List<WordModel> wordObject = _wordRepository.SearchWords(myWord).ToList();
 
+                words = wordObject.Select(o => o.Word)
+                .Skip(pageSize * pageNumber)
+                .Take(pageSize).ToList();
+
+                //_wordRepository.InsertCachedWord(myWord);
+            }
+            
             return words;
 
         }
