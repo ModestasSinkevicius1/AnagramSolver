@@ -213,6 +213,70 @@ namespace AnagramSolver.BusinessLogic
             }
         }
 
+        public void InsertUserLogToDB(IList<WordModel> words, string myWord, string userIp)
+        {
+            try
+            {
+                OpenConnection();
+
+                SqlCommand cmd;
+
+                foreach (WordModel ana in words)
+                {
+                    cmd = new();
+                    cmd.Connection = cn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "InsertUserLog";
+
+                    cmd.Parameters.Add(new SqlParameter("@userIp", userIp));
+                    cmd.Parameters.Add(new SqlParameter("@searchingWord", myWord));
+                    cmd.Parameters.Add(new SqlParameter("@searchTime", DateTime.Now.ToString("MM/dd/yyyy H:mm")));
+                    cmd.Parameters.Add(new SqlParameter("@foundAnagramId", ana.Id));
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
+        public IList<UserModel> GetUserLogFromDB()
+        {
+            List<UserModel> users = new();
+            try
+            {
+                OpenConnection();
+
+                SqlCommand cmd = new();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetUserLog";                         
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        users.Add(new UserModel(Convert.ToInt32(dr["UserId"]),Convert.ToString(dr["iP"]),
+                            Convert.ToString(dr["SearchingWord"]), Convert.ToDateTime(dr["SearchTime"]), 
+                            Convert.ToString(dr["Anagram"])));
+                    }
+                }
+                dr.Close();
+
+                return users;
+
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
         private void OpenConnection()
         {            
             cn.Open();

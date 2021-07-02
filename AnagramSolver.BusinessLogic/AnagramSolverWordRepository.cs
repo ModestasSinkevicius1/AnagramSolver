@@ -54,5 +54,15 @@ namespace AnagramSolver.BusinessLogic
         {
             
         }
+
+        public void InsertUserLogToDB(IList<WordModel> words, string myWord, string userIp)
+        {
+
+        }
+
+        public IList<UserModel> GetUserLogFromDB()
+        {
+            return null;
+        }
     }
 }

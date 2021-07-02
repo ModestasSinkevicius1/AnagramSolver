@@ -1,0 +1,21 @@
+﻿@{ 
+    ViewData["Title"] = "UserLogs";
+    var users = ViewData["Users"] as List<UserModel>;
+}
+<table class="table table-bordered">
+    <tr>
+        <th class="col-1 text-center" scope="col">User IP</th>
+        <th class="col-1 text-center" scope="col">Search time</th>
+        <th class="col-1 text-center" scope="col">Searching Word</th>
+        <th class="col-1 text-center" scope="col">Found anagram</th>
+    </tr>
+    @foreach (var user in users)
+    {
+    <tr>
+        <td class="col-1">@user.Ip</td>
+        <td class="col-1">@user.SearchTime</td>
+        <td class="col-1">@user.SearchingWord</td>
+        <td class="col-1">@user.FoundAnagram</td>
+    </tr>
+    }
+</table>
