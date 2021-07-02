@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using AnagramSolver.Contracts;
+using System.Collections.Generic;
 
 namespace AnagramSolver.WebApp.Controllers
 {
@@ -13,14 +14,17 @@ namespace AnagramSolver.WebApp.Controllers
 
         private IAnagramSolver _anagramSolverLogic;
         private IWordService _wordService;
+        private IUserService _userService;
 
         public HomeController(ILogger<HomeController> logger, 
             IAnagramSolver anagramSolverLogic,
-            IWordService wordService)
+            IWordService wordService,
+            IUserService userService)
         {
             _logger = logger;
             _anagramSolverLogic = anagramSolverLogic;
             _wordService = wordService;
+            _userService = userService;
         }
 
         public IActionResult Index(string myWords)
@@ -28,7 +32,12 @@ namespace AnagramSolver.WebApp.Controllers
             if (string.IsNullOrWhiteSpace(myWords))
                 return new EmptyResult();
 
-            ViewData["Anagrams"] = _wordService.GetAnagramsByQuery(myWords).ToList();
+            List<WordModel> words = _wordService.GetAnagramsByQuery(myWords);
+
+            ViewData["Anagrams"] = words.ToList();
+
+            _userService.InsertUserLog(words, myWords,
+                Request.HttpContext.Connection.RemoteIpAddress.ToString());
 
             return View();
         }
@@ -47,7 +56,13 @@ namespace AnagramSolver.WebApp.Controllers
         public IActionResult FileAccess()
         {
             return View();
-        }    
+        }
+        
+        public IActionResult UserLog()
+        {
+            ViewData["Users"] = _userService.GetUserLog().ToList();
+            return View();
+        }
 
         public IActionResult SearchWord(string searchWord)
         {

@@ -15,5 +15,9 @@ namespace AnagramSolver.Contracts
         IList<WordModel> GetWordFromCache(string myWord);
 
         void DeleteRecordFromWordTable(string myWord);
+
+        void InsertUserLogToDB(IList<WordModel> words, string MyWord, string userIp);
+
+        IList<UserModel> GetUserLogFromDB();
     }
 }
