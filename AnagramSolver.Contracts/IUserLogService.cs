@@ -2,7 +2,7 @@
 
 namespace AnagramSolver.Contracts
 {
-    public interface IUserService
+    public interface IUserLogService
     {
         void InsertUserLog(IList<WordModel> words, string myWord, string userIp);
 

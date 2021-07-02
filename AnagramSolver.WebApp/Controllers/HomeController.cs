@@ -14,12 +14,12 @@ namespace AnagramSolver.WebApp.Controllers
 
         private IAnagramSolver _anagramSolverLogic;
         private IWordService _wordService;
-        private IUserService _userService;
+        private IUserLogService _userService;
 
         public HomeController(ILogger<HomeController> logger, 
             IAnagramSolver anagramSolverLogic,
             IWordService wordService,
-            IUserService userService)
+            IUserLogService userService)
         {
             _logger = logger;
             _anagramSolverLogic = anagramSolverLogic;

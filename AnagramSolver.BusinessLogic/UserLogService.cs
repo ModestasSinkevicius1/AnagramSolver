@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace AnagramSolver.BusinessLogic
 {
-    public class UserService : IUserService
+    public class UserLogService : IUserLogService
     {
         private IWordRepository _wordRepository;
 
-        public UserService(IWordRepository wordRepository)
+        public UserLogService(IWordRepository wordRepository)
         {
             _wordRepository = wordRepository;
         }
