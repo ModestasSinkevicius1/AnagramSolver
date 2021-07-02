@@ -230,7 +230,7 @@ namespace AnagramSolver.BusinessLogic
 
                     cmd.Parameters.Add(new SqlParameter("@userIp", userIp));
                     cmd.Parameters.Add(new SqlParameter("@searchingWord", myWord));
-                    cmd.Parameters.Add(new SqlParameter("@searchTime", DateTime.Now.ToString("MM/dd/yyyy H:mm")));
+                    cmd.Parameters.Add(new SqlParameter("@searchTime", DateTime.Now.ToString()));
                     cmd.Parameters.Add(new SqlParameter("@foundAnagramId", ana.Id));
 
                     cmd.ExecuteNonQuery();
