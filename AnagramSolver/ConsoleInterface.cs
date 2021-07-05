@@ -99,7 +99,7 @@ namespace AnagramSolver.Cli
         void StoreDataToDB()
         {
             SqlConnection cn = new SqlConnection();
-            cn.ConnectionString = _dbConConfig.ConnectionString;
+            cn.ConnectionString = _dbConConfig.DBConnection;
             cn.Open();
 
             SqlCommand cmd;            

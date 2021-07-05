@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -17,7 +17,7 @@ namespace AnagramSolver.BusinessLogic
         {
             _dbConConf = dbConConf.Value;
 
-            cn.ConnectionString = _dbConConf.ConnectionString;
+            cn.ConnectionString = _dbConConf.DBConnection;
         }
         public IList<WordModel> GetWords()
         {

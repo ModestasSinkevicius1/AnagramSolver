@@ -2,7 +2,7 @@
 {
     public class DBConnectionConfig
     {
-        public const string DBConnection = "DBConnection";
-        public string ConnectionString { get; set; }
+        public const string ConnectionStrings = "ConnectionStrings";
+        public string DBConnection { get; set; }
     }
 }
