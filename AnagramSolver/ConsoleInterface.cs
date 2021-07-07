@@ -9,6 +9,8 @@ using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
+using AnagramSolver.EF.CodeFirst.DAL;
+using AnagramSolver.EF.CodeFirst.Models;
 
 namespace AnagramSolver.Cli
 {
@@ -41,10 +43,10 @@ namespace AnagramSolver.Cli
         {            
             try
             {                
-                string commandWord = "";
+                string commandWord = "";                
 
                 while (commandWord != "exit")
-                {
+                {                    
                     Console.WriteLine("Type 'exit' or press Ctrl + C to close program");
 
                     commandWord = GetMyInput();
@@ -96,7 +98,7 @@ namespace AnagramSolver.Cli
             }         
         }       
 
-        void StoreDataToDB()
+        private void StoreDataToDB()
         {
             SqlConnection cn = new SqlConnection();
             cn.ConnectionString = _dbConConfig.DBConnection;
@@ -117,6 +119,30 @@ namespace AnagramSolver.Cli
             }
 
             cn.Close();
+        }
+
+        private void StoreDataToDBWithEF()
+        {
+            using(var db = new AnagramDBCodeFirstContext())
+            {
+                List<WordModel> words = _wordRepository.GetWords().ToList();
+
+                int countWord = 0;
+
+                foreach (WordModel ana in _wordRepository.GetWords().
+                GroupBy(o => o.Word).Select(group => group.First()))
+                {
+                    var wordEntity = new WordEnt() 
+                    { 
+                        Word = ana.Word,
+                        Category = ana.Category
+                    };
+
+                    db.Word.Add(wordEntity);                               
+                    Console.Write($"\r{countWord++}/{words.Count-1}");               
+                }
+                db.SaveChanges();
+            }
         }
 
         async Task RequestToServer(string myWord)
