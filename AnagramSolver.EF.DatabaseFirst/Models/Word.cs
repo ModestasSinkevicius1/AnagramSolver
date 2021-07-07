@@ -10,6 +10,7 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
         public Word()
         {
             CachedWords = new HashSet<CachedWord>();
+            UserLogs = new HashSet<UserLog>();
         }
 
         public int Id { get; set; }
@@ -17,5 +18,6 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
         public int Category { get; set; }
 
         public virtual ICollection<CachedWord> CachedWords { get; set; }
+        public virtual ICollection<UserLog> UserLogs { get; set; }
     }
 }

@@ -12,5 +12,7 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
         public string SearchingWord { get; set; }
         public DateTime SearchTime { get; set; }
         public int FoundAnagramId { get; set; }
+
+        public virtual Word FoundAnagram { get; set; }
     }
 }

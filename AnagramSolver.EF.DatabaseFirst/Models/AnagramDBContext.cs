@@ -1,5 +1,4 @@
 ﻿using System;
-using AnagramSolver.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -25,8 +24,8 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {               
-                optionsBuilder.UseSqlServer("Server=LT-LIT-SC-0505;Database=AnagramDB;Integrated security=true;");
+            {
+                optionsBuilder.UseSqlServer("Server=LT-LIT-SC-0505;Database=AnagramDB;Integrated security=true");
             }
         }
 
@@ -50,8 +49,7 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
 
             modelBuilder.Entity<UserLog>(entity =>
             {
-                entity.HasKey(e => e.UserId)
-                    .HasName("PK_UserLog_1");
+                entity.HasKey(e => e.UserId);
 
                 entity.ToTable("UserLog");
 
@@ -64,6 +62,11 @@ namespace AnagramSolver.EF.DatabaseFirst.Models
                 entity.Property(e => e.SearchingWord)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.FoundAnagram)
+                    .WithMany(p => p.UserLogs)
+                    .HasForeignKey(d => d.FoundAnagramId)
+                    .HasConstraintName("FK_UserLog_Word");
             });
 
             modelBuilder.Entity<Word>(entity =>
