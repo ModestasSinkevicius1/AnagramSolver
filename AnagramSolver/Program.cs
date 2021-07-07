@@ -33,12 +33,12 @@ namespace AnagramSolver.Cli
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                     services.                        
-                        AddSingleton<IWordRepository, DBWordRepository>().
+                        AddSingleton<IWordRepository, DBWordRepositoryDatabaseFirst>().
                         AddSingleton<IAnagramSolver, AnagramSolverLogic>().
                         AddSingleton<IWordService, WordService>().
                         AddSingleton<ConsoleInterface>().
                         Configure<AnagramConfig>(context.Configuration.GetSection(AnagramConfig.Anagram)).
                         Configure<URIConfig>(context.Configuration.GetSection(URIConfig.ClientUriRequest)).
-                        Configure<DBConnectionConfig>(context.Configuration.GetSection(DBConnectionConfig.DBConnection)));                            
+                        Configure<DBConnectionConfig>(context.Configuration.GetSection(DBConnectionConfig.ConnectionStrings)));                            
     }
 }

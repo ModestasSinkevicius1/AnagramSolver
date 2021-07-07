@@ -20,13 +20,13 @@ namespace AnagramSolver.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IWordRepository, DBWordRepository>();
+            services.AddSingleton<IWordRepository, DBWordRepositoryDatabaseFirst>();
             services.AddSingleton<IAnagramSolver, AnagramSolverLogic>();
             services.AddSingleton<IWordService, WordService>();
             services.AddSingleton<IUserLogService, UserLogService>();
             services.Configure<AnagramConfig>(Configuration.GetSection(AnagramConfig.Anagram));
             services.Configure<ContentConfig>(Configuration.GetSection(ContentConfig.Content));
-            services.Configure<DBConnectionConfig>(Configuration.GetSection(DBConnectionConfig.DBConnection));
+            services.Configure<DBConnectionConfig>(Configuration.GetSection(DBConnectionConfig.ConnectionStrings));
 
             services.AddControllersWithViews();
         }
