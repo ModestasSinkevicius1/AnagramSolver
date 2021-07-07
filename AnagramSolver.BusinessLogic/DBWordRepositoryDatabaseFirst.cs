@@ -135,13 +135,13 @@ namespace AnagramSolver.BusinessLogic
     
             using(var db = new AnagramDBContext())
             {
-                var logs = db.UserLogs.ToList();
+                var logs = db.UserLogs.Include(b => b.FoundAnagram).ToList();
 
                 foreach (var log in logs)
                 {              
                     users.Add(new UserModel(log.UserId, log.Ip, 
                         log.SearchingWord, log.SearchTime, 
-                        log.FoundAnagramId.ToString()));
+                        log.FoundAnagram.Word1));
                 }
             }
                 
