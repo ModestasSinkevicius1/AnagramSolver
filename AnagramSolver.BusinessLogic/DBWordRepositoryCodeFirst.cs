@@ -138,7 +138,7 @@ namespace AnagramSolver.BusinessLogic
                 foreach (var log in logs)
                 {
                     users.Add(new UserModel(log.UserLogID, log.Ip,
-                        log.SearcingWord, log.SearchTime,
+                        log.SearchingWord, log.SearchTime,
                         log.WordID.ToString()));
                 }
             }

@@ -10,7 +10,7 @@ namespace AnagramSolver.EF.CodeFirst.Models
     {
         public int UserLogID { get; set; }
         public string Ip { get; set; }
-        public string SearcingWord { get; set; }
+        public string SearchingWord { get; set; }
         public DateTime SearchTime { get; set; }
         public int WordID { get; set; }
 
