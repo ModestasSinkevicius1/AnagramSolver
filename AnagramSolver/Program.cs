@@ -33,7 +33,7 @@ namespace AnagramSolver.Cli
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                     services.                        
-                        AddSingleton<IWordRepository, DBWordRepositoryDatabaseFirst>().
+                        AddSingleton<IWordRepository, DBWordRepositoryCodeFirst>().
                         AddSingleton<IAnagramSolver, AnagramSolverLogic>().
                         AddSingleton<IWordService, WordService>().
                         AddSingleton<ConsoleInterface>().
