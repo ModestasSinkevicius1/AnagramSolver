@@ -30,14 +30,15 @@ namespace AnagramSolver.BusinessLogic
 
             if (string.IsNullOrWhiteSpace(myWord) || myWord == "*")
             {
-                words = _wordRepository.GetWords().Select(o => o.Word)
-                .Skip(pageSize * pageNumber)
-                .Take(pageSize).ToList();
+                words = _wordRepository.GetWords()
+                    .OrderBy(a => a.Word).Select(o => o.Word)
+                    .Skip(pageSize * pageNumber).Take(pageSize).ToList();
 
                 return words;
             }
         
-            List<WordModel> wordModels = _wordRepository.SearchWords(myWord).ToList();
+            List<WordModel> wordModels = _wordRepository.SearchWords(myWord)
+                .OrderBy(a => a.Word).ToList();
 
             words = wordModels.Select(o => o.Word)
             .Skip(pageSize * pageNumber)
