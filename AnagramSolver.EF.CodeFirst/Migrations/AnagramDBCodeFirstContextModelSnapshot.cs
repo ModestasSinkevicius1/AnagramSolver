@@ -52,7 +52,7 @@ namespace AnagramSolver.EF.CodeFirst.Migrations
                     b.Property<DateTime>("SearchTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SearchingWord")
+                    b.Property<string>("SearcingWord")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WordID")
