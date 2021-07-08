@@ -9,7 +9,7 @@ namespace AnagramSolver.WebApp.Controllers
     [ApiController]
     public class AnagramController : ControllerBase
     {
-        private IAnagramSolver _anagramSolverLogic;        
+        private readonly IAnagramSolver _anagramSolverLogic;        
         
         public AnagramController(IAnagramSolver anagramSolverLogic)
         {            

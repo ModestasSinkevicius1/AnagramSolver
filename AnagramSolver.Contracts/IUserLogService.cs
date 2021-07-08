@@ -6,6 +6,6 @@ namespace AnagramSolver.Contracts
     {
         void InsertUserLog(IList<WordModel> words, string myWord, string userIp);
 
-        IList<UserModel> GetUserLog(); 
+        IList<UserModel> GetUserLog();
     }
 }

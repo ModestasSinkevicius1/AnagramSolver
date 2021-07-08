@@ -2,9 +2,6 @@
 using AnagramSolver.Contracts;
 using System.IO;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using Microsoft.Extensions.Options;
 
 namespace AnagramSolver.BusinessLogic
 {

@@ -11,18 +11,16 @@ namespace AnagramSolver.WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        private IAnagramSolver _anagramSolverLogic;
-        private IWordService _wordService;
-        private IUserLogService _userService;
+        
+        private readonly IWordService _wordService;
+        private readonly IUserLogService _userService;
 
         public HomeController(ILogger<HomeController> logger, 
             IAnagramSolver anagramSolverLogic,
             IWordService wordService,
             IUserLogService userService)
         {
-            _logger = logger;
-            _anagramSolverLogic = anagramSolverLogic;
+            _logger = logger;            
             _wordService = wordService;
             _userService = userService;
         }
@@ -42,10 +40,7 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();       
 
         public IActionResult Dictionary(int pageNumber, int pageSize, string myWord)
         {
@@ -53,11 +48,8 @@ namespace AnagramSolver.WebApp.Controllers
             return View();
         }
 
-        public IActionResult FileAccess()
-        {
-            return View();
-        }
-        
+        public IActionResult FileAccess() => View();
+
         public IActionResult UserLog()
         {
             ViewData["Users"] = _userService.GetUserLog().ToList();

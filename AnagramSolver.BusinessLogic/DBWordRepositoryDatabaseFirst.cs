@@ -9,11 +9,7 @@ using System.Linq;
 namespace AnagramSolver.BusinessLogic
 {
     public class DBWordRepositoryDatabaseFirst : IWordRepository
-    {       
-        public DBWordRepositoryDatabaseFirst()
-        {            
-        }
-
+    {        
         public IList<WordModel> GetWords()
         {
             IList<WordModel> words = new List<WordModel>();

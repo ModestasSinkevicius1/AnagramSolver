@@ -12,7 +12,7 @@ namespace AnagramSolver.Cli
         {            
             ContainerSetup(args);            
         }
-       
+
         static void ContainerSetup(string[] args)
         {
             using IHost host = CreateHostBuilder(args).Build();

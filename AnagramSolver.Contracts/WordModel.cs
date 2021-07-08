@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnagramSolver.Contracts
+﻿namespace AnagramSolver.Contracts
 {
     public class WordModel
     {
@@ -18,9 +12,7 @@ namespace AnagramSolver.Contracts
             Word = word;
             Category = category;
         }
-        public override string ToString()
-        {
-            return $"Result: {Word}";
-        }
+
+        public override string ToString() => $"Result: {Word}";        
     }
 }

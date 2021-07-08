@@ -5,7 +5,7 @@ namespace AnagramSolver.BusinessLogic
 {
     public class UserLogService : IUserLogService
     {
-        private IWordRepository _wordRepository;
+        private readonly IWordRepository _wordRepository;
 
         public UserLogService(IWordRepository wordRepository)
         {

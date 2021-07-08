@@ -9,9 +9,9 @@ namespace AnagramSolver.BusinessLogic
 {
     public class DBWordRepository : IWordRepository
     {
-        private DBConnectionConfig _dbConConf;
+        private readonly DBConnectionConfig _dbConConf;
 
-        private SqlConnection cn = new();
+        private readonly SqlConnection cn = new();
 
         public DBWordRepository(IOptions<DBConnectionConfig> dbConConf)
         {

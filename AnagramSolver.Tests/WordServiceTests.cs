@@ -9,9 +9,9 @@ namespace AnagramSolver.Tests
     [TestFixture]
     class WordServiceTests
     {
-        Mock<IWordRepository> mockWordRepository;
+        private Mock<IWordRepository> mockWordRepository;
 
-        WordService wordService;
+        private WordService wordService;
 
         [SetUp]
         public void Setup()
