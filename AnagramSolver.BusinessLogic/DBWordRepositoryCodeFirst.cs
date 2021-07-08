@@ -18,13 +18,14 @@ namespace AnagramSolver.BusinessLogic
 
             using (var db = new AnagramDBCodeFirstContext())
             {
-                foreach (var word in db.Word.ToList())
+                foreach (var word in db.Word.
+                    OrderBy(o => o.Word).ToList())
                 {
                     words.Add(new WordModel(word.ID, word.Word, word.Category));
                 }
             }
 
-            return words.OrderBy(o => o.Word).ToList();
+            return words;
         }
 
         public IList<WordModel> SearchWords(string myWord)
@@ -35,6 +36,7 @@ namespace AnagramSolver.BusinessLogic
             {
                 var wordsFound = from s in db.Word
                                  where s.Word.Contains(myWord)
+                                 orderby s.Word
                                  select s;
 
                 foreach (var word in wordsFound)
@@ -43,7 +45,7 @@ namespace AnagramSolver.BusinessLogic
                 }
             }
 
-            return words.OrderBy(o => o.Word).ToList();
+            return words;
         }
 
         public void InsertCachedWord(IList<WordModel> words, string myWord)

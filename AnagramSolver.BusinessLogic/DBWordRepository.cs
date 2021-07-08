@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using System.Linq;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -31,7 +30,7 @@ namespace AnagramSolver.BusinessLogic
                 SqlCommand cmd = new();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM Word";
+                cmd.CommandText = "SELECT * FROM Word ORDER BY Word";
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
@@ -44,7 +43,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 dr.Close();
                 
-                return words.OrderBy(o => o.Word).ToList();
+                return words;
             }
             finally
             {
@@ -62,7 +61,7 @@ namespace AnagramSolver.BusinessLogic
                 SqlCommand cmd = new();
                 cmd.Connection = cn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = $"SELECT * FROM Word WHERE Word LIKE '%' + @myWord + '%'";
+                cmd.CommandText = $"SELECT * FROM Word WHERE Word LIKE '%' + @myWord + '%' ORDER BY Word";
 
                 SqlParameter param = new SqlParameter("@myWord", myWord);
                 cmd.Parameters.Add(param);
@@ -80,7 +79,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 dr.Close();                
 
-                return words.OrderBy(o => o.Word).ToList();
+                return words;
             }
             finally
             {
