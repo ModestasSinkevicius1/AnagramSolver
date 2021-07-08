@@ -26,7 +26,7 @@ namespace AnagramSolver.BusinessLogic
                 }
             }
 
-            return words;            
+            return words.OrderBy(o => o.Word).ToList();
         }
 
         public IList<WordModel> SearchWords(string myWord)
@@ -45,7 +45,7 @@ namespace AnagramSolver.BusinessLogic
                 }
             }         
 
-            return words;           
+            return words.OrderBy(o => o.Word).ToList();
         }
 
         public void InsertCachedWord(IList<WordModel> words, string myWord)

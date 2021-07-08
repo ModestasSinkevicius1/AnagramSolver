@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Linq;
 
 namespace AnagramSolver.BusinessLogic
 {
@@ -43,7 +44,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 dr.Close();
                 
-                return words;
+                return words.OrderBy(o => o.Word).ToList();
             }
             finally
             {
@@ -79,7 +80,7 @@ namespace AnagramSolver.BusinessLogic
                 }
                 dr.Close();                
 
-                return words;
+                return words.OrderBy(o => o.Word).ToList();
             }
             finally
             {
