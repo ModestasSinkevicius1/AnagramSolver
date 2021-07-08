@@ -10,10 +10,10 @@ namespace AnagramSolver.Tests
     [TestFixture]
     public class AnagramSolverLogicTests
     {
-        Mock<IWordRepository> mockWordRepository;        
-        Mock<IOptions<AnagramConfig>> mockAnagramConfig;               
+        private Mock<IWordRepository> mockWordRepository;
+        private Mock<IOptions<AnagramConfig>> mockAnagramConfig;
 
-        AnagramSolverLogic anagramSolverLogic;
+        private AnagramSolverLogic anagramSolverLogic;
 
         [SetUp]
         public void Setup()

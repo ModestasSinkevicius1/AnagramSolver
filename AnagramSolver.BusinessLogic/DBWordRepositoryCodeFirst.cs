@@ -11,7 +11,6 @@ namespace AnagramSolver.BusinessLogic
 {
     public class DBWordRepositoryCodeFirst : IWordRepository
     {
-
         public IList<WordModel> GetWords()
         {
             IList<WordModel> words = new List<WordModel>();

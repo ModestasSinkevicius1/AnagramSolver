@@ -8,7 +8,7 @@ namespace AnagramSolver.WebApp.Controllers
 {
     public class FileController : Controller
     {
-        private ContentConfig _contentConfig;
+        private readonly ContentConfig _contentConfig;
         public FileController(IOptions<ContentConfig> contentConfig)
         {
             _contentConfig = contentConfig.Value;

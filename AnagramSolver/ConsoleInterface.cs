@@ -42,8 +42,8 @@ namespace AnagramSolver.Cli
         public void OutputResult()
         {            
             try
-            {                
-                string commandWord = "";                
+            {
+                string commandWord = "";
 
                 while (commandWord != "exit")
                 {                    
@@ -179,9 +179,6 @@ namespace AnagramSolver.Cli
 
             Console.Clear();
         }
-        private string GetMyInput()
-        {
-            return Console.ReadLine();
-        }
+        private string GetMyInput() => Console.ReadLine();        
     }
 }
