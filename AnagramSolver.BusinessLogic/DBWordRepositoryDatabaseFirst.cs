@@ -20,7 +20,8 @@ namespace AnagramSolver.BusinessLogic
             
             using (var db = new AnagramDBContext())
             {
-                foreach(var word in db.Words.ToList())
+                foreach(var word in db.Words.
+                    OrderBy(o => o.Word1).ToList())
                 {
                     words.Add(new WordModel(word.Id, word.Word1, word.Category));
                 }
@@ -36,7 +37,8 @@ namespace AnagramSolver.BusinessLogic
             using (var db = new AnagramDBContext())
             {                
                 var wordsFound = from s in db.Words 
-                            where s.Word1.Contains(myWord) 
+                            where s.Word1.Contains(myWord)
+                            orderby s.Word1
                             select s;
 
                 foreach (var word in wordsFound)
