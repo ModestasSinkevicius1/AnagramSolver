@@ -46,7 +46,7 @@ namespace AnagramSolver.EF.CodeFirst.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            string sp = @"ALTER PROCEDURE [dbo].[DeleteRecordFromWord]
+            string sp = @"CREATE PROCEDURE [dbo].[DeleteRecordFromWord]
 	                @target nvarchar(50)
                 AS
                 BEGIN

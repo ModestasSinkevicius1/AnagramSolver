@@ -4,14 +4,16 @@ using AnagramSolver.EF.CodeFirst.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnagramSolver.EF.CodeFirst.Migrations
 {
     [DbContext(typeof(AnagramDBCodeFirstContext))]
-    partial class AnagramDBCodeFirstContextModelSnapshot : ModelSnapshot
+    [Migration("20210707124009_sp-DeleteRecordFromWord1")]
+    partial class spDeleteRecordFromWord1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
